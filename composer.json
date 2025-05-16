@@ -1,15 +1,17 @@
 {
-    "name": "yiisoft/_____",
+    "name": "yiisoft/http-middleware",
     "type": "library",
-    "description": "_____",
+    "description": "A collection of PSR-15 middlewares focused on HTTP features",
     "keywords": [
-        "_____"
+        "http",
+        "middleware",
+        "psr-15"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/_____/issues?state=open",
-        "source": "https://github.com/yiisoft/_____",
+        "issues": "https://github.com/yiisoft/http-middleware/issues?state=open",
+        "source": "https://github.com/yiisoft/http-middleware",
         "forum": "https://www.yiiframework.com/forum/",
         "wiki": "https://www.yiiframework.com/wiki/",
         "irc": "ircs://irc.libera.chat:6697/yii",
@@ -25,8 +27,6 @@
             "url": "https://github.com/sponsors/yiisoft"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^8.1"
     },
@@ -40,12 +40,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\_____\\": "src"
+            "Yiisoft\\HttpMiddleware\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\_____\\Tests\\": "tests"
+            "Yiisoft\\HttpMiddleware\\Tests\\": "tests"
         }
     },
     "config": {
