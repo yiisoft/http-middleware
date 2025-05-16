@@ -15,9 +15,9 @@ use function in_array;
 final class ContentLengthMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        public bool $removeOnTransferEncoding = true,
-        public bool $add = true,
-        public array $doNotAddOnStatusCode = [
+        private readonly bool $removeOnTransferEncoding = true,
+        private readonly bool $add = true,
+        private readonly array $doNotAddOnStatusCode = [
             100, // Continue
             101, // Switching Protocols
             102, // Processing
