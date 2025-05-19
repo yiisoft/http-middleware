@@ -11,8 +11,17 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function in_array;
 
+/**
+ * Configurable middleware that adds or removes the `Content-Length` header from the response.
+ */
 final class ContentLengthMiddleware implements MiddlewareInterface
 {
+    /**
+     * @param bool $removeOnTransferEncoding Whether to remove the `Content-Length` header if `Transfer-Encoding` header
+     * is present.
+     * @param bool $add Whether to add the `Content-Length` header if not present.
+     * @param array $doNotAddOnStatusCode List of HTTP status codes where `Content-Length` header should not be added.
+     */
     public function __construct(
         private readonly bool $removeOnTransferEncoding = true,
         private readonly bool $add = true,
