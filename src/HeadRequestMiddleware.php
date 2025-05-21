@@ -11,7 +11,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Middleware that removes the body from response for HEAD requests.
+ * Middleware removes the body from response for HEAD requests.
  */
 final class HeadRequestMiddleware implements MiddlewareInterface
 {
