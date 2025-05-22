@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\HttpMiddleware\Tests\TagRequest;
 
+use ArrayIterator;
 use ArrayObject;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
@@ -35,6 +36,19 @@ final class PredefinedTagProviderTest extends TestCase
         $provider = new PredefinedTagProvider($generator());
 
         assertSame('tag1', $provider->get());
+        assertSame('tag2', $provider->get());
+
+        $this->expectException(OutOfBoundsException::class);
+        $provider->get();
+    }
+
+    public function testStartedIterator(): void
+    {
+        $iterator = new ArrayIterator(['tag1', 'tag2']);
+        $iterator->next();
+
+        $provider = new PredefinedTagProvider($iterator);
+
         assertSame('tag2', $provider->get());
 
         $this->expectException(OutOfBoundsException::class);
