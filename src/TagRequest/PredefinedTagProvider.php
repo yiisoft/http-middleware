@@ -37,10 +37,16 @@ final class PredefinedTagProvider implements TagProviderInterface
 
     private function createIterator(iterable $iterable): Iterator
     {
-        return match (true) {
-            $iterable instanceof Iterator => $iterable,
-            is_array($iterable) => new ArrayIterator($iterable),
-            default => new IteratorIterator($iterable),
-        };
+        if ($iterable instanceof Iterator) {
+            return $iterable;
+        }
+
+        if (is_array($iterable)) {
+            return new ArrayIterator($iterable);
+        }
+
+        $iterator = new IteratorIterator($iterable);
+        $iterator->rewind();
+        return $iterator;
     }
 }
