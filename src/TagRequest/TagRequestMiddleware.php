@@ -10,10 +10,14 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Tags request with a random value that could be later used for identifying it.
+ * Tags request with a value that could be later used for identifying it.
  */
 final class TagRequestMiddleware implements MiddlewareInterface
 {
+    /**
+     * @param string $attributeName The name of the attribute to store the tag in.
+     * @param TagProviderInterface $tagProvider The tag provider.
+     */
     public function __construct(
         private readonly string $attributeName = 'requestTag',
         private readonly TagProviderInterface $tagProvider = new TimeBasedTagProvider(),

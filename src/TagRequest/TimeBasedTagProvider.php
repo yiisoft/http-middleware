@@ -6,6 +6,11 @@ namespace Yiisoft\HttpMiddleware\TagRequest;
 
 use function uniqid;
 
+/**
+ * Represents a tag provider that generates a unique tag based on the current time and additional entropy.
+ *
+ * @see https://www.php.net/manual/function.uniqid.php
+ */
 final class TimeBasedTagProvider implements TagProviderInterface
 {
     public function get(): string

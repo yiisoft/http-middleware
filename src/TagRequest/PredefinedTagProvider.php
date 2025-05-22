@@ -11,11 +11,16 @@ use OutOfBoundsException;
 
 use function is_array;
 
+/**
+ * Provides tags from a predefined collection. Useful for testing purposes.
+ */
 final class PredefinedTagProvider implements TagProviderInterface
 {
-    private Iterator $iterator;
+    private readonly Iterator $iterator;
 
     /**
+     * @param iterable $tags Predefined tags to be returned by the provider.
+     *
      * @psalm-param iterable<string> $tags
      */
     public function __construct(iterable $tags)
