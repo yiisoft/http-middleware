@@ -116,6 +116,24 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
         );
     }
 
+    public function testWithoutCspHeader(): void
+    {
+        $request = new ServerRequest(uri: "https://example.com");
+        $middleware = new ForceSecureConnectionMiddleware(
+            new ResponseFactory(),
+            cspHeader: null,
+        );
+
+        $response = $middleware->process($request, new FakeRequestHandler());
+
+        assertSame(
+            [
+                'Strict-Transport-Security' => ['max-age=31536000'],
+            ],
+            $response->getHeaders()
+        );
+    }
+
     public function testCustomHstsHeader(): void
     {
         $request = new ServerRequest(uri: 'http://example.com/blog');
@@ -132,6 +150,26 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
             [
                 'Location' => ['https://example.com/blog'],
                 'Strict-Transport-Security' => ['max-age=500; includeSubDomains'],
+            ],
+            $response->getHeaders()
+        );
+    }
+
+    public function testWithoutHstsHeader(): void
+    {
+        $request = new ServerRequest(uri: 'http://example.com/blog');
+        $requestHandler = new FakeRequestHandler();
+        $middleware = new ForceSecureConnectionMiddleware(
+            new ResponseFactory(),
+            hstsHeader: null,
+        );
+
+        $response = $middleware->process($request, $requestHandler);
+
+        assertNull($requestHandler->getLastRequest());
+        assertSame(
+            [
+                'Location' => ['https://example.com/blog'],
             ],
             $response->getHeaders()
         );
