@@ -241,11 +241,13 @@ final class HttpCacheMiddlewareTest extends TestCase
         );
     }
 
-    public function testIfModifiedSinceFalse(): void
+    #[TestWith(['Sat, 25 May 2024 10:00:00 GMT'])]
+    #[TestWith(['Fri, 24 May 2024 12:30:00 GMT'])]
+    public function testIfModifiedSinceFalse(string $ifModifiedSinceValue): void
     {
         $request = new ServerRequest(
             headers: [
-                'If-Modified-Since' => 'Sat, 25 May 2024 10:00:00 GMT',
+                'If-Modified-Since' => $ifModifiedSinceValue,
             ]
         );
         $date = new DateTimeImmutable('Fri, 24 May 2024 12:30:00 GMT');
