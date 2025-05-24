@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\HttpMiddleware\HttpCache\ETag;
 use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\CallableETagGenerator;
 
+use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\ETagGeneratorInterface;
+
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertTrue;
@@ -38,5 +40,19 @@ final class ETagTest extends TestCase
         assertTrue($eTag->weak);
         assertSame('stub-test', $eTag->rawValue($generator));
         assertSame('W/"stub-test"', $eTag->headerValue($generator));
+    }
+
+    public function testGeneratedValueCache(): void
+    {
+        $generator = $this->createMock(ETagGeneratorInterface::class);
+        $generator
+            ->expects($this->once())
+            ->method('generate')
+            ->willReturn('generated-value');
+
+        $eTag = new ETag('test');
+
+        assertSame('generated-value', $eTag->rawValue($generator));
+        assertSame('"generated-value"', $eTag->headerValue($generator));
     }
 }
