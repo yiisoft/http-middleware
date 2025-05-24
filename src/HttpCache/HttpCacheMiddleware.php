@@ -80,7 +80,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
                 return false;
             }
 
-            $ifModifiedSince = strtotime($request->getHeaderLine('If-Modified-Since'));
+            $ifModifiedSince = @strtotime($request->getHeaderLine('If-Modified-Since'));
             if ($ifModifiedSince === false) {
                 return false;
             }

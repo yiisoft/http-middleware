@@ -292,7 +292,7 @@ final class HttpCacheMiddlewareTest extends TestCase
                 'If-Modified-Since' => 'XXX',
             ]
         );
-        $date = new DateTimeImmutable('Fri, 24 May 2024 12:30:00 GMT');
+        $date = new DateTimeImmutable('1970-01-01 00:00:00 UTC');
         $middleware = new HttpCacheMiddleware(
             new ResponseFactory(),
             lastModifiedProvider: new PredefinedLastModifiedProvider([$date]),
@@ -303,7 +303,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         assertSame(200, $response->getStatusCode());
         assertSame(
             [
-                'Last-Modified' => ['Fri, 24 May 2024 12:30:00 GMT'],
+                'Last-Modified' => ['Thu, 01 Jan 1970 00:00:00 GMT'],
             ],
             $response->getHeaders(),
         );
