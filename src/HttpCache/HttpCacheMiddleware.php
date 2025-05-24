@@ -122,23 +122,23 @@ final class HttpCacheMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @psalm-return array<string>
+     * @psalm-return list<string>
      */
     private function extractRawETagValues(ServerRequestInterface $request): array
     {
-        $values = explode(',', $request->getHeaderLine('If-None-Match'));
-        $values = array_map(
+        $rawValue = $request->getHeaderLine('If-None-Match');
+        if ($rawValue === '') {
+            return [];
+        }
+
+        return array_map(
             static function (string $value): string {
                 /**
                  * @var string We use a correct pattern, so `preg_replace` always returns a string.
                  */
                 return preg_replace('~^\s*(?:W/)?"([^"]+)"\s*$~', '$1', $value);
             },
-            $values,
-        );
-        return array_filter(
-            $values,
-            static fn(string $value): bool => $value !== '',
+            explode(',', $rawValue),
         );
     }
 }
