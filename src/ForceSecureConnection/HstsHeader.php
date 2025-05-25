@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\HttpMiddleware\ForceSecureConnection;
 
 /**
- * The `Strict-Transport-Security` header to be added to the response.
+ * Represents the `Strict-Transport-Security` header.
  */
 final class HstsHeader
 {
