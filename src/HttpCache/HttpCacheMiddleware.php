@@ -22,8 +22,18 @@ use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\NullLastModifiedProvid
 use function array_map;
 use function in_array;
 
+/**
+ * Middleware that implements HTTP caching using `Cache-Control`, `ETag`, and `Last-Modified` headers.
+ */
 final class HttpCacheMiddleware implements MiddlewareInterface
 {
+    /**
+     * @param ResponseFactoryInterface $responseFactory The response factory to create responses.
+     * @param CacheControlProviderInterface $cacheControlProvider The cache control headers provider.
+     * @param LastModifiedProviderInterface $lastModifiedProvider The last modified dates provider.
+     * @param ETagProviderInterface $eTagProvider The provider for {@see ETag}.
+     * @param ETagGeneratorInterface $eTagGenerator The {@see ETag} string values generator.
+     */
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
         private readonly CacheControlProviderInterface $cacheControlProvider = new NullCacheControlProvider(),

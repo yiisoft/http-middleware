@@ -7,7 +7,16 @@ namespace Yiisoft\HttpMiddleware\HttpCache\ETagProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETag;
 
+/**
+ * Interface for {@see ETag} providers.
+ */
 interface ETagProviderInterface
 {
+    /**
+     * Returns an {@see ETag} instance for the given server request.
+     *
+     * @param ServerRequestInterface $request The server request for which to generate the ETag.
+     * @return ETag|null Instance of {@see ETag} or null if no ETag can be generated for the request.
+     */
     public function get(ServerRequestInterface $request): ?ETag;
 }

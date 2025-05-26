@@ -14,14 +14,14 @@ use Yiisoft\HttpMiddleware\HttpCache\ETag;
 use function is_array;
 
 /**
- * Provides ETags from a predefined collection. Useful for testing purposes.
+ * Provides {@see ETag} from a predefined collection. Useful for testing purposes.
  */
 final class PredefinedETagProvider implements ETagProviderInterface
 {
     private readonly Iterator $iterator;
 
     /**
-     * @param iterable $tags Predefined ETags to be returned by the provider.
+     * @param iterable $tags Predefined {@see ETag} to be returned by the provider.
      *
      * @psalm-param iterable<ETag> $tags
      */
