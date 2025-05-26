@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\HttpMiddleware\ForceSecureConnection\ForceSecureConnectionMiddleware;
 use Yiisoft\HttpMiddleware\ForceSecureConnection\HstsHeader;
-use Yiisoft\HttpMiddleware\ForceSecureConnection\Redirection;
+use Yiisoft\HttpMiddleware\ForceSecureConnection\RedirectOptions;
 use Yiisoft\HttpMiddleware\Tests\Support\FakeRequestHandler;
 
 use function PHPUnit\Framework\assertNull;
@@ -61,7 +61,10 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
     {
         $request = new ServerRequest(uri: 'http://example.com/blog');
         $requestHandler = new FakeRequestHandler();
-        $middleware = new ForceSecureConnectionMiddleware(new ResponseFactory(), redirection: null);
+        $middleware = new ForceSecureConnectionMiddleware(
+            new ResponseFactory(),
+            redirectOptions: new RedirectOptions(false),
+        );
 
         $response = $middleware->process($request, $requestHandler);
 
@@ -81,13 +84,12 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
         $requestHandler = new FakeRequestHandler();
         $middleware = new ForceSecureConnectionMiddleware(
             new ResponseFactory(),
-            redirection: new Redirection(302, 8443),
+            redirectOptions: new RedirectOptions(port: 8443),
         );
 
         $response = $middleware->process($request, $requestHandler);
 
         assertNull($requestHandler->getLastRequest());
-        assertSame(302, $response->getStatusCode());
         assertSame(
             [
                 'Location' => ['https://example.com:8443/blog'],

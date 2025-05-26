@@ -28,13 +28,13 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
 
     /**
      * @param ResponseFactoryInterface $responseFactory The response factory to create responses.
-     * @param Redirection|null $redirection The redirection from HTTP to HTTPS.
+     * @param RedirectOptions $redirectOptions The redirect from HTTP to HTTPS options.
      * @param string|null $cspHeader The `Content-Security-Policy` header to be added to the response.
      * @param HstsHeader|null $hstsHeader The `Strict-Transport-Security` header to be added to the response.
      */
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
-        private readonly ?Redirection $redirection = new Redirection(),
+        private readonly RedirectOptions $redirectOptions = new RedirectOptions(),
         private readonly ?string $cspHeader = self::DEFAULT_CSP_HEADER,
         private readonly ?HstsHeader $hstsHeader = new HstsHeader(),
     ) {
@@ -43,7 +43,7 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->shouldRedirect($request)) {
-            $response = $this->createRedirectResponse($request, $this->redirection);
+            $response = $this->createRedirectResponse($request);
             return $this->addHsts($response);
         }
 
@@ -52,21 +52,16 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
         return $this->addHsts($response);
     }
 
-    /**
-     * @psalm-assert-if-true !null $this->redirection
-     */
     private function shouldRedirect(ServerRequestInterface $request): bool
     {
-        return $this->redirection !== null && strcasecmp($request->getUri()->getScheme(), 'http') === 0;
+        return $this->redirectOptions->enabled && strcasecmp($request->getUri()->getScheme(), 'http') === 0;
     }
 
-    private function createRedirectResponse(
-        ServerRequestInterface $request,
-        Redirection $redirection,
-    ): ResponseInterface {
-        $url = (string) $request->getUri()->withScheme('https')->withPort($redirection->port);
+    private function createRedirectResponse(ServerRequestInterface $request): ResponseInterface
+    {
+        $url = (string) $request->getUri()->withScheme('https')->withPort($this->redirectOptions->port);
         return $this->responseFactory
-            ->createResponse($redirection->statusCode)
+            ->createResponse(301) // 301 Moved Permanently
             ->withHeader('Location', $url);
     }
 

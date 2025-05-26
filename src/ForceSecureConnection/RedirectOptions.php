@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Yiisoft\HttpMiddleware\ForceSecureConnection;
 
 /**
- * Redirection from HTTP to HTTPS parameters.
+ * Redirection HTTP to HTTPS options.
  */
-final class Redirection
+final class RedirectOptions
 {
     /**
-     * @param int $statusCode The response status code of redirection.
+     * @param bool $enabled Whether to enable redirection.
      * @param int|null $port The redirection port.
      */
     public function __construct(
-        public readonly int $statusCode = 301, // 301 Moved Permanently
+        public readonly bool $enabled = true,
         public readonly ?int $port = null,
     ) {
     }
