@@ -7,7 +7,8 @@ namespace Yiisoft\HttpMiddleware\HttpCache\CacheControlProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Interface for Cache-Control header value providers. Given a request it generates a header value.
+ * Interface for `Cache-Control` header value providers. Given a request it generates a header value.
+ *
  * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control
  */
 interface CacheControlProviderInterface

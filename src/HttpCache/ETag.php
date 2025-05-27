@@ -26,11 +26,25 @@ final class ETag
     ) {
     }
 
+    /**
+     * Returns the raw ETag value generated from the seed.
+     *
+     * @param ETagGeneratorInterface $generator The generator used to create the ETag value.
+     * @return string The raw ETag value generated from the seed.
+     */
     public function rawValue(ETagGeneratorInterface $generator): string
     {
         return $this->value ??= $generator->generate($this->seed);
     }
 
+    /**
+     * Returns the ETag value formatted for use in HTTP headers.
+     *
+     * The value is enclosed in double quotes and prefixed with 'W/' if the ETag is weak.
+     *
+     * @param ETagGeneratorInterface $generator The generator used to create the ETag value.
+     * @return string The formatted ETag header value.
+     */
     public function headerValue(ETagGeneratorInterface $generator): string
     {
         $value = '"' . $this->rawValue($generator) . '"';
