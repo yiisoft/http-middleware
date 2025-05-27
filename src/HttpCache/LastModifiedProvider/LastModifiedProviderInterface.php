@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Interface for last modified date providers.
+ * Provides last modified date given a server request.
  */
 interface LastModifiedProviderInterface
 {
