@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETag;
 
 /**
- * Implementation of {@see ETagProviderInterface} that returns null for all requests.
+ * Returns `null` ETag for all requests.
  * It can be used when ETag functionality is not required.
  */
 final class NullETagProvider implements ETagProviderInterface
