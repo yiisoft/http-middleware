@@ -51,30 +51,35 @@ final class HttpCacheMiddleware implements MiddlewareInterface
 
         $cacheControl = $this->cacheControlProvider->get($request);
         $eTag = $this->eTagProvider->get($request);
+        $eTagHeader = $eTag === null ? null : new ETagHeader($eTag, $this->eTagGenerator);
         $lastModified = $this->lastModifiedProvider->get($request);
 
-        $cacheIsValid = $this->validateCache($request, $lastModified, $eTag);
+        $cacheIsValid = $this->validateCache($request, $lastModified, $eTagHeader);
 
         if ($cacheIsValid) {
             $response = $this->responseFactory->createResponse(304);
-            $response = $this->addETagHeader($response, $eTag);
+            $response = $this->addETagHeader($response, $eTagHeader);
             $response = $this->addCacheControlHeader($response, $cacheControl);
-            if ($eTag === null) {
+            if ($eTagHeader === null) {
                 $response = $this->addLastModifiedHeader($response, $lastModified);
             }
             return $response;
         }
 
         $response = $handler->handle($request);
-        $response = $this->addETagHeader($response, $eTag);
+        $response = $this->addETagHeader($response, $eTagHeader);
         $response = $this->addCacheControlHeader($response, $cacheControl);
         return $this->addLastModifiedHeader($response, $lastModified);
     }
 
-    private function validateCache(ServerRequestInterface $request, ?DateTimeImmutable $lastModified, ?ETag $eTag): bool
+    private function validateCache(
+        ServerRequestInterface $request,
+        ?DateTimeImmutable $lastModified,
+        ?ETagHeader $eTagHeader,
+    ): bool
     {
         if ($request->hasHeader('If-None-Match')) {
-            if ($eTag === null) {
+            if ($eTagHeader === null) {
                 return false;
             }
 
@@ -82,7 +87,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
             if ($headerETags === []) {
                 return false;
             }
-            return in_array($eTag->rawValue($this->eTagGenerator), $headerETags, true);
+            return in_array($eTagHeader->rawValue(), $headerETags, true);
         }
 
         if ($request->hasHeader('If-Modified-Since')) {
@@ -110,13 +115,13 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         return $response->withHeader('Cache-Control', $value);
     }
 
-    private function addETagHeader(ResponseInterface $response, ?ETag $eTag): ResponseInterface
+    private function addETagHeader(ResponseInterface $response, ?ETagHeader $eTagHeader): ResponseInterface
     {
-        if ($eTag === null) {
+        if ($eTagHeader === null) {
             return $response;
         }
 
-        return $response->withHeader('ETag', $eTag->headerValue($this->eTagGenerator));
+        return $response->withHeader('ETag', $eTagHeader->headerValue());
     }
 
     private function addLastModifiedHeader(ResponseInterface $response, ?DateTimeImmutable $date): ResponseInterface
