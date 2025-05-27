@@ -22,7 +22,7 @@ final class ETagHeader
     /**
      * Returns the raw ETag value generated from the seed.
      *
-     * @return string The raw ETag value generated from the seed.
+     * @return string The raw ETag value.
      */
     public function rawValue(): string
     {
