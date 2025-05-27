@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETag;
 
 /**
- * Interface for {@see ETag} providers.
+ * Obtains {@see ETag} for a given server request.
  */
 interface ETagProviderInterface
 {
