@@ -7,8 +7,7 @@ namespace Yiisoft\HttpMiddleware\HttpCache\CacheControlProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Implementation of {@see CacheControlProviderInterface} that returns a predefined cache control header value for all
- * requests.
+ * Returns a predefined cache control header value regardless of request.
  */
 final class ConstantCacheControlProvider implements CacheControlProviderInterface
 {
