@@ -27,7 +27,7 @@ from HTTP to HTTPS and adds headers necessary to enhance the security policy;
 - [`HeadRequestMiddleware`](docs/guide/en/head-request-middleware.md) - removes body from response for HEAD request;
 - [`HttpCacheMiddleware`](docs/guide/en/http-cache-middleware.md) - implements HTTP caching using `Cache-Control`,
 `ETag`, and `Last-Modified` headers;
-- [`TagRequestMiddleware`](docs/guide/en/tag-request-middleware.md) - add specific header to request, which can be used
+- [`TagRequestMiddleware`](docs/guide/en/tag-request-middleware.md) - adds specific header to request, which can be used
 for logging or debugging purposes.
 
 For proxy related middleware, there is a separate package [Yii Proxy Middleware](https://github.com/yiisoft/yii-middleware).
