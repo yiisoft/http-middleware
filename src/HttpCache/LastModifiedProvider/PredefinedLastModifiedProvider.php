@@ -18,12 +18,15 @@ use function is_array;
  */
 final class PredefinedLastModifiedProvider implements LastModifiedProviderInterface
 {
+    /**
+     * @psalm-var Iterator<int, DateTimeImmutable>
+     */
     private readonly Iterator $iterator;
 
     /**
      * @param iterable $dates Predefined dates to be returned by the provider.
      *
-     * @psalm-param iterable<DateTimeImmutable> $dates
+     * @psalm-param iterable<int, DateTimeImmutable> $dates
      */
     public function __construct(iterable $dates)
     {
@@ -36,15 +39,21 @@ final class PredefinedLastModifiedProvider implements LastModifiedProviderInterf
             throw new OutOfBoundsException('No more dates available.');
         }
 
+        /** @var DateTimeImmutable $date */
         $date = $this->iterator->current();
         $this->iterator->next();
 
         return $date;
     }
 
+    /**
+     * @psalm-param iterable<int, DateTimeImmutable> $iterable
+     * @psalm-return Iterator<int, DateTimeImmutable>
+     */
     private function createIterator(iterable $iterable): Iterator
     {
         if ($iterable instanceof Iterator) {
+            /** @psalm-var Iterator<int, DateTimeImmutable> */
             return $iterable;
         }
 

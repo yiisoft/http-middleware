@@ -18,12 +18,15 @@ use function is_array;
  */
 final class PredefinedETagProvider implements ETagProviderInterface
 {
+    /**
+     * @psalm-var Iterator<int, ETag>
+     */
     private readonly Iterator $iterator;
 
     /**
      * @param iterable $tags Predefined {@see ETag} to be returned by the provider.
      *
-     * @psalm-param iterable<ETag> $tags
+     * @psalm-param iterable<int, ETag> $tags
      */
     public function __construct(iterable $tags)
     {
@@ -36,15 +39,21 @@ final class PredefinedETagProvider implements ETagProviderInterface
             throw new OutOfBoundsException('No more tags available.');
         }
 
+        /** @var ETag $eTag */
         $eTag = $this->iterator->current();
         $this->iterator->next();
 
         return $eTag;
     }
 
+    /**
+     * @psalm-param iterable<int, ETag> $iterable
+     * @psalm-return Iterator<int, ETag>
+     */
     private function createIterator(iterable $iterable): Iterator
     {
         if ($iterable instanceof Iterator) {
+            /** @psalm-var Iterator<int, ETag> */
             return $iterable;
         }
 
