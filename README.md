@@ -18,7 +18,7 @@
 The package provides a collection of [PSR-15](https://www.php-fig.org/psr/psr-15/#12-middleware) middleware focused on
 HTTP features:
 
-- [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) - controls the `Content-Length` header in
+- [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) - manages the `Content-Length` header in
 response;
 - [`CorsAllowAllMiddleware`](docs/guide/en/cors-allow-all-middleware.md) - adds
 [CORS](https://developer.mozilla.org/docs/Web/HTTP/Guides/CORS) headers allowing everything to response;
