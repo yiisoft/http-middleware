@@ -16,12 +16,15 @@ use function is_array;
  */
 final class PredefinedTagProvider implements TagProviderInterface
 {
+    /**
+     * @psalm-var Iterator<int, string>
+     */
     private readonly Iterator $iterator;
 
     /**
      * @param iterable $tags Predefined tags to be returned by the provider.
      *
-     * @psalm-param iterable<string> $tags
+     * @psalm-param iterable<int, string> $tags
      */
     public function __construct(iterable $tags)
     {
@@ -34,15 +37,20 @@ final class PredefinedTagProvider implements TagProviderInterface
             throw new OutOfBoundsException('No more tags available.');
         }
 
+        /** @var string $tag */
         $tag = $this->iterator->current();
         $this->iterator->next();
 
         return $tag;
     }
-
+    /**
+     * @psalm-param iterable<int, string> $iterable
+     * @psalm-return Iterator<int, string>
+     */
     private function createIterator(iterable $iterable): Iterator
     {
         if ($iterable instanceof Iterator) {
+            /** @psalm-var Iterator<int, string> */
             return $iterable;
         }
 
