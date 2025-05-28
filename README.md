@@ -15,8 +15,8 @@
 [![type-coverage](https://shepherd.dev/github/yiisoft/http-middleware/coverage.svg)](https://shepherd.dev/github/yiisoft/http-middleware)
 [![psalm-level](https://shepherd.dev/github/yiisoft/http-middleware/level.svg)](https://shepherd.dev/github/yiisoft/http-middleware)
 
-The package provides a collection of [PSR-15](https://www.php-fig.org/psr/psr-15/#12-middleware) middleware for working
-with [PSR-7](https://www.php-fig.org/psr/psr-7/) HTTP requests and responses:
+The package provides a collection of [PSR-15](https://www.php-fig.org/psr/psr-15/#12-middleware) middleware focused on
+HTTP features:
 
 - [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) - controls the `Content-Length` header in
 response;
