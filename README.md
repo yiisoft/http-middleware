@@ -15,7 +15,22 @@
 [![type-coverage](https://shepherd.dev/github/yiisoft/http-middleware/coverage.svg)](https://shepherd.dev/github/yiisoft/http-middleware)
 [![psalm-level](https://shepherd.dev/github/yiisoft/http-middleware/level.svg)](https://shepherd.dev/github/yiisoft/http-middleware)
 
-The package ...
+The package provides a collection of [PSR-15](https://www.php-fig.org/psr/psr-15/#12-middleware) middleware for working
+with [PSR-7](https://www.php-fig.org/psr/psr-7/) HTTP requests and responses:
+
+- [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) - controls the `Content-Length` header in
+response;
+- [`CorsAllowAllMiddleware`](docs/guide/en/cors-allow-all-middleware.md) - adds
+[CORS](https://developer.mozilla.org/docs/Web/HTTP/Guides/CORS) headers allowing everything to response;
+- [`ForceSecureConnectionMiddleware`](docs/guide/en/force-secure-connection-middleware.md) - redirects insecure requests
+from HTTP to HTTPS and adds headers necessary to enhance the security policy;
+- [`HeadRequestMiddleware`](docs/guide/en/head-request-middleware.md) - removes body from response for HEAD request;
+- [`HttpCacheMiddleware`](docs/guide/en/http-cache-middleware.md) - implements HTTP caching using `Cache-Control`,
+`ETag`, and `Last-Modified` headers;
+- [`TagRequestMiddleware`](docs/guide/en/tag-request-middleware.md) - add specific header to request, which can be used
+for logging or debugging purposes.
+
+For proxy related middleware, there is a separate package [Yii Proxy Middleware](https://github.com/yiisoft/yii-middleware).
 
 ## Requirements
 
@@ -29,10 +44,9 @@ The package could be installed with [Composer](https://getcomposer.org):
 composer require yiisoft/http-middleware
 ```
 
-## General usage
-
 ## Documentation
 
+- [Guide](docs/guide/en/README.md)
 - [Internals](docs/internals.md)
 
 If you need help or have a question, the [Yii Forum](https://forum.yiiframework.com/c/yii-3-0/63) is a good place
