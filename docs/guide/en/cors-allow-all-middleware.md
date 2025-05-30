@@ -4,7 +4,8 @@ A middleware that adds permissive [CORS](https://developer.mozilla.org/docs/Web/
 (Cross-Origin Resource Sharing) headers to all HTTP responses. It allows all origins, headers, and credentials, 
 making it suitable for development or internal APIs.
 
-> ⚠️ **Security notice**  
+> ⚠️ **Security notice**
+> 
 > This middleware should **not be used in production** as-is unless you're absolutely certain it's safe for your
 > context. Allowing all origins and credentials without restriction poses a **serious security risk**.
 

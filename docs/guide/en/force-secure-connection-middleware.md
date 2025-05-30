@@ -4,6 +4,7 @@ This middleware redirects insecure HTTP requests to HTTPS and adds security-rela
 application’s security.
 
 > **Note**
+> 
 > It's recommended to enforce HTTPS at the web server level (e.g., Nginx, Angie, Apache) when possible. Use this
 > middleware if you can't configure the server or are building a portable product.
 
