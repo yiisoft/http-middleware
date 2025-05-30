@@ -8,7 +8,7 @@ This middleware is used to:
 - remove the `Content-Length` header if the `Transfer-Encoding` header is present (typically for chunked responses);
 - add the `Content-Length` header if it's missing and the response body allows it.
 
-Default creating:
+Default usage:
 
 ```php
 use Yiisoft\Http\Middleware\ContentLengthMiddleware;
