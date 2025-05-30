@@ -14,7 +14,7 @@ making it suitable for development or internal APIs.
 - allow all HTTP methods and headers;
 - expose all response headers to the client;
 - enable credentials (cookies, authorization headers, etc.) for cross-origin requests;
-- set a cache lifetime for preflight responses (Access-Control-Max-Age).
+- set a cache lifetime for preflight responses.
 
 General usage:
 
