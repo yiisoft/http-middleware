@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\HttpMiddleware\Tests\TagRequest;
+namespace Yiisoft\HttpMiddleware\Tests\TagRequest\TagProvider;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\HttpMiddleware\TagRequest\TimeBasedTagProvider;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TimeBasedTagProvider;
 
 use function PHPUnit\Framework\assertMatchesRegularExpression;
 

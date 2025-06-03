@@ -26,7 +26,7 @@ Related links:
 - [Cache-Control header](https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Cache-Control)
 - [Last-Modified header](https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Last-Modified)
 
-## Default usage
+## General usage
 
 ```php
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -90,7 +90,7 @@ Default: `new DefaultETagGenerator()`
 
 An instance of `ETagGeneratorInterface` that generates a string `ETag` value based on the provided seed.
 
-## `Cache-Control` header value provider
+## `Cache-Control` header value providers
 
 A provider should implement the `CacheControlProviderInterface` interface to supply the value of the `Cache-Control` 
 header based on the incoming request.
@@ -101,7 +101,7 @@ Implementations out of the box:
 - `ConstantCacheControlProvider` — returns a predefined static cache control header value regardless of the request.
   Default is `public, max-age=3600` (value of constant `ConstantCacheControlProvider::DEFAULT_VALUE`).
 
-## `Last-Modified` date provider
+## `Last-Modified` date providers
 
 A provider should implement the `LastModifiedProviderInterface` interface to supply the last modified date for the given
 server request.
@@ -113,7 +113,7 @@ Implementations out of the box:
   dates. It is mainly intended for testing purposes. The provider returns dates one by one for each request and throws
   an exception when no more dates are available.
 
-## `ETag` provider
+## `ETag` providers
 
 A provider should implement the `ETagProviderInterface` interface to supply the `ETag` instance with `ETag` metadata.
 
@@ -128,7 +128,7 @@ Implementations out of the box:
   purposes. The provider returns `ETag` values one by one for each request and throws an exception when no more values
   are available.
 
-## `ETag` generator
+## `ETag` generators
 
 An `ETagGeneratorInterface` implementation is used to generate a string `ETag` value based on the provided seed.
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\HttpMiddleware\TagRequest;
+namespace Yiisoft\HttpMiddleware\TagRequest\TagProvider;
 
 /**
  * Provides a tag for a request.
