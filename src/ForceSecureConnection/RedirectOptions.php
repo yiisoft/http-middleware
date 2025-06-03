@@ -7,15 +7,15 @@ namespace Yiisoft\HttpMiddleware\ForceSecureConnection;
 /**
  * Redirection HTTP to HTTPS options.
  */
-final class RedirectOptions
+final readonly class RedirectOptions
 {
     /**
      * @param bool $enabled Whether to enable redirection.
      * @param int|null $port The redirection port.
      */
     public function __construct(
-        public readonly bool $enabled = true,
-        public readonly ?int $port = null,
+        public bool $enabled = true,
+        public ?int $port = null,
     ) {
     }
 }

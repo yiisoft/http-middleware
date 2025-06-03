@@ -16,12 +16,12 @@ use function is_array;
 /**
  * Provides {@see ETag} from a predefined collection. Useful for testing purposes.
  */
-final class PredefinedETagProvider implements ETagProviderInterface
+final readonly class PredefinedETagProvider implements ETagProviderInterface
 {
     /**
      * @psalm-var Iterator<int, ETag>
      */
-    private readonly Iterator $iterator;
+    private Iterator $iterator;
 
     /**
      * @param iterable $tags Predefined {@see ETag} to be returned by the provider.

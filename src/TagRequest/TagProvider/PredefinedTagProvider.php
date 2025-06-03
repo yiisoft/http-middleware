@@ -9,19 +9,17 @@ use Iterator;
 use IteratorIterator;
 use OutOfBoundsException;
 
-use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TagProviderInterface;
-
 use function is_array;
 
 /**
  * Provides tags from a predefined collection. Useful for testing purposes.
  */
-final class PredefinedTagProvider implements TagProviderInterface
+final readonly class PredefinedTagProvider implements TagProviderInterface
 {
     /**
      * @psalm-var Iterator<int, string>
      */
-    private readonly Iterator $iterator;
+    private Iterator $iterator;
 
     /**
      * @param iterable $tags Predefined tags to be returned by the provider.

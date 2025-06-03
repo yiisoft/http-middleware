@@ -13,13 +13,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Middleware removes the body from response for HEAD requests.
  */
-final class HeadRequestMiddleware implements MiddlewareInterface
+final readonly class HeadRequestMiddleware implements MiddlewareInterface
 {
     /**
      * @param StreamFactoryInterface $streamFactory Factory to create a stream.
      */
     public function __construct(
-        private readonly StreamFactoryInterface $streamFactory,
+        private StreamFactoryInterface $streamFactory,
     ) {
     }
 
