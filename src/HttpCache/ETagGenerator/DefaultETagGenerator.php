@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\HttpMiddleware\HttpCache\ETagGenerator;
 
 /**
- * Generates a string ETag value using a PHP native function {@see base64_encode()} and {@see sha1()}.
+ * Generates a string ETag value using PHP native functions {@see base64_encode()} and {@see sha1()}.
  */
 final class DefaultETagGenerator implements ETagGeneratorInterface
 {
