@@ -18,19 +18,20 @@
 The package provides a collection of [PSR-15](https://www.php-fig.org/psr/psr-15/#12-middleware) middleware focused on
 HTTP features:
 
-- [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) - manages the `Content-Length` header in
-response;
-- [`CorsAllowAllMiddleware`](docs/guide/en/cors-allow-all-middleware.md) - adds
-[CORS](https://developer.mozilla.org/docs/Web/HTTP/Guides/CORS) headers allowing everything to response;
-- [`ForceSecureConnectionMiddleware`](docs/guide/en/force-secure-connection-middleware.md) - redirects insecure requests
-from HTTP to HTTPS and adds headers necessary to enhance the security policy;
-- [`HeadRequestMiddleware`](docs/guide/en/head-request-middleware.md) - removes body from response for HEAD request;
-- [`HttpCacheMiddleware`](docs/guide/en/http-cache-middleware.md) - implements HTTP caching using `Cache-Control`,
+- [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) — manages the `Content-Length` header in
+  the response;
+- [`CorsAllowAllMiddleware`](docs/guide/en/cors-allow-all-middleware.md) — adds
+[CORS](https://developer.mozilla.org/docs/Web/HTTP/Guides/CORS) headers allowing any request origins in later
+  requests;
+- [`ForceSecureConnectionMiddleware`](docs/guide/en/force-secure-connection-middleware.md) — redirects insecure requests
+  from HTTP to HTTPS and adds headers necessary to enhance the security policy;
+- [`HeadRequestMiddleware`](docs/guide/en/head-request-middleware.md) — removes body from response for `HEAD` request;
+- [`HttpCacheMiddleware`](docs/guide/en/http-cache-middleware.md) — implements HTTP caching using `Cache-Control`,
 `ETag`, and `Last-Modified` headers;
-- [`TagRequestMiddleware`](docs/guide/en/tag-request-middleware.md) - adds specific header to request, which can be used
+- [`TagRequestMiddleware`](docs/guide/en/tag-request-middleware.md) — adds specific header to request, which can be used
 for logging or debugging purposes.
 
-For proxy related middleware, there is a separate package [Yii Proxy Middleware](https://github.com/yiisoft/yii-middleware).
+For proxy related middleware, there is a separate package [Yii Proxy Middleware](https://github.com/yiisoft/proxy-middleware).
 
 ## Requirements
 

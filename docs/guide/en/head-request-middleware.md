@@ -1,6 +1,6 @@
 # `HeadRequestMiddleware`
 
-This middleware ensures that HTTP HEAD requests return a response without a body, as required by the HTTP specification.
+This middleware ensures that HTTP `HEAD` requests return a response without a body, as required by the HTTP specification.
 
 General usage:
 

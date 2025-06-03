@@ -4,7 +4,7 @@ This middleware redirects insecure HTTP requests to HTTPS and adds security-rela
 application’s security.
 
 > It's recommended to enforce HTTPS at the web server level (e.g., Nginx, Angie, Apache) when possible. Use this
-> middleware if you can't configure the server or are building a portable product.
+> middleware if you can't configure the server or if you are building a portable product.
 
 Default usage:
 
@@ -69,7 +69,7 @@ Default: `new HstsHeader()`
 
 An instance of `HstsHeader` that represents the HTTP `Strict-Transport-Security` (HSTS) header:
 
-- `maxAge` - the time in seconds that the browser should remember to only access the site via HTTPS.
+- `maxAge` - the time in seconds that the browser should only access the site via HTTPS.
   Default is one year — `31_536_000` (value of constant `HstsHeader::DEFAULT_MAX_AGE`).
 - `includeSubDomains` - whether to include subdomains in the HSTS policy. Default is `false`.
 

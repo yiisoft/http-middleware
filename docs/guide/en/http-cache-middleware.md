@@ -6,9 +6,9 @@ has not changed.
 
 ## How does it work?
 
-Only handles `GET` and `HEAD` HTTP methods, other methods are passed through unmodified.
+The middleware only handles `GET` and `HEAD` HTTP methods, other methods are passed through unmodified.
 
-The middleware uses providers to obtain cache-related metadata for each request:
+It uses providers to get cache-related metadata for each request:
 
 - `Cache-Control` header value provider (`CacheControlProviderInterface`);
 - `Last-Modified` date provider (`LastModifiedProviderInterface`);

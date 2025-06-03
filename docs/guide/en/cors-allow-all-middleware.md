@@ -2,7 +2,7 @@
 
 A middleware that adds permissive [CORS](https://developer.mozilla.org/docs/Web/HTTP/Guides/CORS) 
 (Cross-Origin Resource Sharing) headers to all HTTP responses. It allows all origins, headers, and credentials, 
-making it suitable for development or internal APIs.
+making it suitable for development or internal APIs or publicly available APIs.
 
 > ⚠️ **Security notice**
 > 
