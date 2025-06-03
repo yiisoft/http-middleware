@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\HttpMiddleware\Tests\TagRequest;
+namespace Yiisoft\HttpMiddleware\Tests\TagRequest\TagProvider;
 
 use ArrayIterator;
 use ArrayObject;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\HttpMiddleware\TagRequest\PredefinedTagProvider;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\PredefinedTagProvider;
 
 use function PHPUnit\Framework\assertSame;
 

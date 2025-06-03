@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\HttpMiddleware\Tests\TagRequest;
+namespace Yiisoft\HttpMiddleware\Tests\TagRequest\TagProvider;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\HttpMiddleware\TagRequest\PredefinedTagProvider;
-use Yiisoft\HttpMiddleware\TagRequest\PrefixedTagProvider;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\PredefinedTagProvider;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\PrefixedTagProvider;
 
 use function PHPUnit\Framework\assertSame;
 

@@ -8,6 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TagProviderInterface;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TimeBasedTagProvider;
 
 /**
  * Tags request with a value that could be later used for identifying it.

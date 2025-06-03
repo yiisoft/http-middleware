@@ -21,6 +21,8 @@ final class ContentLengthMiddleware implements MiddlewareInterface
      * is present.
      * @param bool $add Whether to add the `Content-Length` header if not present.
      * @param array $doNotAddOnStatusCode List of HTTP status codes where `Content-Length` header should not be added.
+     *
+     * @psalm-param list<int> $doNotAddOnStatusCode
      */
     public function __construct(
         private readonly bool $removeOnTransferEncoding = true,

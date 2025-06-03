@@ -7,7 +7,7 @@ namespace Yiisoft\HttpMiddleware\Tests\TagRequest;
 use HttpSoft\Message\Response;
 use HttpSoft\Message\ServerRequest;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\HttpMiddleware\TagRequest\PredefinedTagProvider;
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\PredefinedTagProvider;
 use Yiisoft\HttpMiddleware\TagRequest\TagRequestMiddleware;
 use Yiisoft\HttpMiddleware\Tests\Support\FakeRequestHandler;
 

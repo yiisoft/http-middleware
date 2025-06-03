@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\HttpMiddleware\TagRequest;
+namespace Yiisoft\HttpMiddleware\TagRequest\TagProvider;
 
 use ArrayIterator;
 use Iterator;
 use IteratorIterator;
 use OutOfBoundsException;
+
+use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TagProviderInterface;
 
 use function is_array;
 
