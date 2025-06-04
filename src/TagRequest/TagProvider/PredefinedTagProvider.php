@@ -9,8 +9,6 @@ use Iterator;
 use IteratorIterator;
 use OutOfBoundsException;
 
-use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TagProviderInterface;
-
 use function is_array;
 
 /**

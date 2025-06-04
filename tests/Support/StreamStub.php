@@ -26,7 +26,7 @@ final class StreamStub implements StreamInterface, Stringable
         throw new LogicException('Not implemented.');
     }
 
-    public function detach()
+    public function detach(): void
     {
         throw new LogicException('Not implemented.');
     }
@@ -86,7 +86,7 @@ final class StreamStub implements StreamInterface, Stringable
         throw new LogicException('Not implemented.');
     }
 
-    public function getMetadata(?string $key = null)
+    public function getMetadata(?string $key = null): void
     {
         throw new LogicException('Not implemented.');
     }

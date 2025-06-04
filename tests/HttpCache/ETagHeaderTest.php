@@ -13,7 +13,6 @@ use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\ETagGeneratorInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETagHeader;
 
 use function PHPUnit\Framework\assertSame;
-use function PHPUnit\Framework\assertTrue;
 
 final class ETagHeaderTest extends TestCase
 {

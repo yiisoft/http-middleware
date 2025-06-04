@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\HttpMiddleware\TagRequest\TagProvider;
 
-use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TagProviderInterface;
-
 /**
  * A tag provider that prefixes the result of a decorated tag provider with a specified string.
  */
