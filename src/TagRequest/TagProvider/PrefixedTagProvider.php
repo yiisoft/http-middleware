@@ -7,15 +7,15 @@ namespace Yiisoft\HttpMiddleware\TagRequest\TagProvider;
 /**
  * A tag provider that prefixes the result of a decorated tag provider with a specified string.
  */
-final readonly class PrefixedTagProvider implements TagProviderInterface
+final class PrefixedTagProvider implements TagProviderInterface
 {
     /**
      * @param string $prefix The prefix to add to the tag.
      * @param TagProviderInterface $decorated The decorated tag provider.
      */
     public function __construct(
-        private string $prefix,
-        private TagProviderInterface $decorated,
+        private readonly string $prefix,
+        private readonly TagProviderInterface $decorated,
     ) {
     }
 

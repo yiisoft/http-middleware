@@ -8,10 +8,10 @@ use LogicException;
 use Psr\Http\Message\StreamInterface;
 use Stringable;
 
-final readonly class StreamStub implements StreamInterface, Stringable
+final class StreamStub implements StreamInterface, Stringable
 {
     public function __construct(
-        private bool $readable = true,
+        private readonly bool $readable = true,
     ) {
     }
 

@@ -25,7 +25,7 @@ use function in_array;
 /**
  * Middleware that implements HTTP caching using `Cache-Control`, `ETag`, and `Last-Modified` headers.
  */
-final readonly class HttpCacheMiddleware implements MiddlewareInterface
+final class HttpCacheMiddleware implements MiddlewareInterface
 {
     /**
      * @param ResponseFactoryInterface $responseFactory The response factory to create responses.
@@ -35,11 +35,11 @@ final readonly class HttpCacheMiddleware implements MiddlewareInterface
      * @param ETagGeneratorInterface $eTagGenerator The {@see ETag} string values generator.
      */
     public function __construct(
-        private ResponseFactoryInterface $responseFactory,
-        private CacheControlProviderInterface $cacheControlProvider = new NullCacheControlProvider(),
-        private LastModifiedProviderInterface $lastModifiedProvider = new NullLastModifiedProvider(),
-        private ETagProviderInterface $eTagProvider = new NullETagProvider(),
-        private ETagGeneratorInterface $eTagGenerator = new DefaultETagGenerator(),
+        private readonly ResponseFactoryInterface $responseFactory,
+        private readonly CacheControlProviderInterface $cacheControlProvider = new NullCacheControlProvider(),
+        private readonly LastModifiedProviderInterface $lastModifiedProvider = new NullLastModifiedProvider(),
+        private readonly ETagProviderInterface $eTagProvider = new NullETagProvider(),
+        private readonly ETagGeneratorInterface $eTagGenerator = new DefaultETagGenerator(),
     ) {
     }
 

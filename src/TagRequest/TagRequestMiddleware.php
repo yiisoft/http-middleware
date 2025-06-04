@@ -14,15 +14,15 @@ use Yiisoft\HttpMiddleware\TagRequest\TagProvider\TimeBasedTagProvider;
 /**
  * Tags request with a value that could be later used for identifying it.
  */
-final readonly class TagRequestMiddleware implements MiddlewareInterface
+final class TagRequestMiddleware implements MiddlewareInterface
 {
     /**
      * @param string $attributeName The name of the attribute to store the tag in.
      * @param TagProviderInterface $tagProvider The tag provider.
      */
     public function __construct(
-        private string $attributeName = 'requestTag',
-        private TagProviderInterface $tagProvider = new TimeBasedTagProvider(),
+        private readonly string $attributeName = 'requestTag',
+        private readonly TagProviderInterface $tagProvider = new TimeBasedTagProvider(),
     ) {
     }
 

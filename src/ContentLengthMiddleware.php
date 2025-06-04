@@ -14,7 +14,7 @@ use function in_array;
 /**
  * Configurable middleware that adds or removes the `Content-Length` header from the response.
  */
-final readonly class ContentLengthMiddleware implements MiddlewareInterface
+final class ContentLengthMiddleware implements MiddlewareInterface
 {
     /**
      * @param bool $removeOnTransferEncoding Whether to remove the `Content-Length` header if `Transfer-Encoding` header
@@ -25,9 +25,9 @@ final readonly class ContentLengthMiddleware implements MiddlewareInterface
      * @psalm-param list<int> $doNotAddOnStatusCode
      */
     public function __construct(
-        private bool $removeOnTransferEncoding = true,
-        private bool $add = true,
-        private array $doNotAddOnStatusCode = [
+        private readonly bool $removeOnTransferEncoding = true,
+        private readonly bool $add = true,
+        private readonly array $doNotAddOnStatusCode = [
             100, // Continue
             101, // Switching Protocols
             102, // Processing

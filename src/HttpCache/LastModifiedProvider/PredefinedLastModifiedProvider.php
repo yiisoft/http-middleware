@@ -16,12 +16,12 @@ use function is_array;
 /**
  * Provides dates from a predefined collection. Useful for testing purposes.
  */
-final readonly class PredefinedLastModifiedProvider implements LastModifiedProviderInterface
+final class PredefinedLastModifiedProvider implements LastModifiedProviderInterface
 {
     /**
      * @psalm-var Iterator<int, DateTimeImmutable>
      */
-    private Iterator $iterator;
+    private readonly Iterator $iterator;
 
     /**
      * @param iterable $dates Predefined dates to be returned by the provider.

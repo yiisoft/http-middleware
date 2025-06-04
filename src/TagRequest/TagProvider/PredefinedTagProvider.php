@@ -14,12 +14,12 @@ use function is_array;
 /**
  * Provides tags from a predefined collection. Useful for testing purposes.
  */
-final readonly class PredefinedTagProvider implements TagProviderInterface
+final class PredefinedTagProvider implements TagProviderInterface
 {
     /**
      * @psalm-var Iterator<int, string>
      */
-    private Iterator $iterator;
+    private readonly Iterator $iterator;
 
     /**
      * @param iterable $tags Predefined tags to be returned by the provider.
