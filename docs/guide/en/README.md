@@ -8,5 +8,6 @@ HTTP features. All middleware implements independent functionality and doesn't i
 - [`ForceSecureConnectionMiddleware`](force-secure-connection-middleware.md)
 - [`HeadRequestMiddleware`](head-request-middleware.md)
 - [`HttpCacheMiddleware`](http-cache-middleware.md)
+- [`RemoveBodyMiddleware`](remove-body-middleware.md)
 - [`TagRequestMiddleware`](tag-request-middleware.md)
 

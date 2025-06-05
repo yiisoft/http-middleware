@@ -28,6 +28,7 @@ HTTP features:
 - [`HeadRequestMiddleware`](docs/guide/en/head-request-middleware.md) — removes body from response for `HEAD` request;
 - [`HttpCacheMiddleware`](docs/guide/en/http-cache-middleware.md) — implements HTTP caching using `Cache-Control`,
 `ETag`, and `Last-Modified` headers;
+- [`RemoveBodyMiddleware`](docs/guide/en/remove-body-middleware.md) — removes body from response by status code;
 - [`TagRequestMiddleware`](docs/guide/en/tag-request-middleware.md) — adds specific header to request, which can be used
 for logging or debugging purposes.
 
