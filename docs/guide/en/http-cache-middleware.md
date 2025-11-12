@@ -128,6 +128,40 @@ Implementations out of the box:
   purposes. The provider returns `ETag` values one by one for each request and throws an exception when no more values
   are available.
 
+### `ETagSuffixRemover` decorator
+
+The `ETagSuffixRemover` is a decorator for `ETagProviderInterface` that removes suffixes from ETag seeds. This is useful
+for normalizing ETag values by stripping compression algorithm suffixes (e.g., `-gzip`) or other trailing identifiers.
+
+Only the first matching suffix is removed. For example, if a provider returns an ETag with seed `content-gzip-br` and
+suffixes `['-gzip', '-br']` are specified, the remover will remove `-gzip` (the first match), resulting in
+`content-br`.
+
+Constructor parameters:
+
+- `$provider` (required) — An instance of `ETagProviderInterface` to wrap.
+- `$suffix` — A single suffix as a string or an array of suffixes to remove. Default is an empty array.
+
+Example usage:
+
+```php
+use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\ETagProviderInterface;
+use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\ETagSuffixRemover;
+use Yiisoft\HttpMiddleware\HttpCache\ETag;
+
+/**
+ * @var ETagProviderInterface $baseProvider
+ */
+
+// Remove compression algorithm suffixes
+$remover = new ETagSuffixRemover($baseProvider, ['-gzip', '-br', '-deflate']);
+
+// Or with a single suffix as string
+$remover = new ETagSuffixRemover($baseProvider, '-gzip');
+
+// Now the ETag seeds will be normalized: 'content-hash-gzip' -> 'content-hash'
+```
+
 ## `ETag` generators
 
 An `ETagGeneratorInterface` implementation is used to generate a string `ETag` value based on the provided seed.
