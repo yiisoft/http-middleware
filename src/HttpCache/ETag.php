@@ -21,4 +21,15 @@ final class ETag
         public readonly bool $weak = false,
     ) {
     }
+
+    /**
+     * Creates a new `ETag` instance with a different seed value.
+     *
+     * @param string $seed The new seed value for the ETag.
+     * @return self A new `ETag` instance with the provided seed.
+     */
+    public function withSeed(string $seed): self
+    {
+        return new self($seed, $this->weak);
+    }
 }
