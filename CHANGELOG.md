@@ -2,7 +2,8 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- New #12: Add `ETagSuffixRemover` decorator for ETag providers (@vjik)
+- New #12: Add `ETag::withSeed()` method (@vjik)
 
 ## 1.1.0 June 09, 2025
 
