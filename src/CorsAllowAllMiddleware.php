@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\Http\Header;
 use Yiisoft\Http\Method;
 
 /**
@@ -26,13 +27,13 @@ final class CorsAllowAllMiddleware implements MiddlewareInterface
         $response = $handler->handle($request);
 
         return $response
-            ->withHeader('Allow', '*')
-            ->withHeader('Vary', 'Origin')
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Methods', implode(',', Method::ALL))
-            ->withHeader('Access-Control-Allow-Headers', '*')
-            ->withHeader('Access-Control-Expose-Headers', '*')
-            ->withHeader('Access-Control-Allow-Credentials', 'true')
-            ->withHeader('Access-Control-Max-Age', '86400');
+            ->withHeader(Header::ALLOW, '*')
+            ->withHeader(Header::VARY, 'Origin')
+            ->withHeader(Header::ACCESS_CONTROL_ALLOW_ORIGIN, '*')
+            ->withHeader(Header::ACCESS_CONTROL_ALLOW_METHODS, implode(',', Method::ALL))
+            ->withHeader(Header::ACCESS_CONTROL_ALLOW_HEADERS, '*')
+            ->withHeader(Header::ACCESS_CONTROL_EXPOSE_HEADERS, '*')
+            ->withHeader(Header::ACCESS_CONTROL_ALLOW_CREDENTIALS, 'true')
+            ->withHeader(Header::ACCESS_CONTROL_MAX_AGE, '86400');
     }
 }
