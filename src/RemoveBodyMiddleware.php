@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\Http\Status;
 
 use function in_array;
 
@@ -26,12 +27,12 @@ final class RemoveBodyMiddleware implements MiddlewareInterface
     public function __construct(
         private readonly StreamFactoryInterface $streamFactory,
         private readonly array $statusCodes = [
-            100, // Continue
-            101, // Switching Protocols
-            102, // Processing
-            204, // No Content
-            205, // Reset Content
-            304, // Not Modified
+            Status::CONTINUE,
+            Status::SWITCHING_PROTOCOLS,
+            Status::PROCESSING,
+            Status::NO_CONTENT,
+            Status::RESET_CONTENT,
+            Status::NOT_MODIFIED,
         ],
     ) {
     }

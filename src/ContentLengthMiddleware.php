@@ -8,6 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\Http\Header;
+use Yiisoft\Http\Status;
 
 use function in_array;
 
@@ -28,12 +30,12 @@ final class ContentLengthMiddleware implements MiddlewareInterface
         private readonly bool $removeOnTransferEncoding = true,
         private readonly bool $add = true,
         private readonly array $doNotAddOnStatusCode = [
-            100, // Continue
-            101, // Switching Protocols
-            102, // Processing
-            204, // No Content
-            205, // Reset Content
-            304, // Not Modified
+            Status::CONTINUE,
+            Status::SWITCHING_PROTOCOLS,
+            Status::PROCESSING,
+            Status::NO_CONTENT,
+            Status::RESET_CONTENT,
+            Status::NOT_MODIFIED,
         ],
     ) {
     }
@@ -43,7 +45,7 @@ final class ContentLengthMiddleware implements MiddlewareInterface
         $response = $handler->handle($request);
 
         if ($this->shouldRemoveContentLength($response)) {
-            return $response->withoutHeader('Content-Length');
+            return $response->withoutHeader(Header::CONTENT_LENGTH);
         }
 
         if ($this->shouldSkipContentLength($response)) {
@@ -55,13 +57,13 @@ final class ContentLengthMiddleware implements MiddlewareInterface
 
     private function shouldRemoveContentLength(ResponseInterface $response): bool
     {
-        return $this->removeOnTransferEncoding && $response->hasHeader('Transfer-Encoding');
+        return $this->removeOnTransferEncoding && $response->hasHeader(Header::TRANSFER_ENCODING);
     }
 
     private function shouldSkipContentLength(ResponseInterface $response): bool
     {
         return !$this->add
-            || $response->hasHeader('Content-Length')
+            || $response->hasHeader(Header::CONTENT_LENGTH)
             || in_array($response->getStatusCode(), $this->doNotAddOnStatusCode, true);
     }
 
@@ -77,6 +79,6 @@ final class ContentLengthMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        return $response->withHeader('Content-Length', (string) $contentLength);
+        return $response->withHeader(Header::CONTENT_LENGTH, (string) $contentLength);
     }
 }

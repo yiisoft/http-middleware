@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\Http\Method;
 
 /**
  * Adds Cross-Origin Resource Sharing (CORS) headers allowing everything to the response.
@@ -28,7 +29,7 @@ final class CorsAllowAllMiddleware implements MiddlewareInterface
             ->withHeader('Allow', '*')
             ->withHeader('Vary', 'Origin')
             ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,HEAD,POST,PUT,PATCH,DELETE')
+            ->withHeader('Access-Control-Allow-Methods', implode(',', Method::ALL))
             ->withHeader('Access-Control-Allow-Headers', '*')
             ->withHeader('Access-Control-Expose-Headers', '*')
             ->withHeader('Access-Control-Allow-Credentials', 'true')

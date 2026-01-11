@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\Http\Header;
+use Yiisoft\Http\Method;
 use Yiisoft\HttpMiddleware\HttpCache\CacheControlProvider\CacheControlProviderInterface;
 use Yiisoft\HttpMiddleware\HttpCache\CacheControlProvider\NullCacheControlProvider;
 use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\DefaultETagGenerator;
@@ -45,7 +47,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (!in_array($request->getMethod(), ['GET', 'HEAD'], true)) {
+        if (!in_array($request->getMethod(), [Method::GET, Method::HEAD], true)) {
             return $handler->handle($request);
         }
 
@@ -78,7 +80,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         ?ETagHeader $eTagHeader,
     ): bool
     {
-        if ($request->hasHeader('If-None-Match')) {
+        if ($request->hasHeader(Header::IF_NONE_MATCH)) {
             if ($eTagHeader === null) {
                 return false;
             }
@@ -90,12 +92,12 @@ final class HttpCacheMiddleware implements MiddlewareInterface
             return in_array($eTagHeader->rawValue(), $headerETags, true);
         }
 
-        if ($request->hasHeader('If-Modified-Since')) {
+        if ($request->hasHeader(Header::IF_MODIFIED_SINCE)) {
             if ($lastModified === null) {
                 return false;
             }
 
-            $ifModifiedSince = @strtotime($request->getHeaderLine('If-Modified-Since'));
+            $ifModifiedSince = @strtotime($request->getHeaderLine(Header::IF_MODIFIED_SINCE));
             if ($ifModifiedSince === false) {
                 return false;
             }
@@ -112,7 +114,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        return $response->withHeader('Cache-Control', $value);
+        return $response->withHeader(Header::CACHE_CONTROL, $value);
     }
 
     private function addETagHeader(ResponseInterface $response, ?ETagHeader $eTagHeader): ResponseInterface
@@ -121,7 +123,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
             return $response;
         }
 
-        return $response->withHeader('ETag', $eTagHeader->headerValue());
+        return $response->withHeader(Header::ETAG, $eTagHeader->headerValue());
     }
 
     private function addLastModifiedHeader(ResponseInterface $response, ?DateTimeImmutable $date): ResponseInterface
@@ -131,7 +133,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         }
 
         return $response->withHeader(
-            'Last-Modified',
+            Header::LAST_MODIFIED,
             gmdate('D, d M Y H:i:s', $date->getTimestamp()) . ' GMT',
         );
     }
@@ -141,7 +143,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
      */
     private function extractRawETagValues(ServerRequestInterface $request): array
     {
-        $rawValue = $request->getHeaderLine('If-None-Match');
+        $rawValue = $request->getHeaderLine(Header::IF_NONE_MATCH);
         if ($rawValue === '') {
             return [];
         }

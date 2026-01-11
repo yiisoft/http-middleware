@@ -7,6 +7,7 @@ namespace Yiisoft\HttpMiddleware\Tests;
 use HttpSoft\Message\Response;
 use HttpSoft\Message\ServerRequest;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Http\Method;
 use Yiisoft\HttpMiddleware\CorsAllowAllMiddleware;
 use Yiisoft\HttpMiddleware\Tests\Support\FakeRequestHandler;
 
@@ -28,7 +29,7 @@ final class CorsAllowAllMiddlewareTest extends TestCase
                 'Allow' => ['*'],
                 'Vary' => ['Origin'],
                 'Access-Control-Allow-Origin' => ['*'],
-                'Access-Control-Allow-Methods' => ['GET,OPTIONS,HEAD,POST,PUT,PATCH,DELETE'],
+                'Access-Control-Allow-Methods' => [implode(',', Method::ALL)],
                 'Access-Control-Allow-Headers' => ['*'],
                 'Access-Control-Expose-Headers' => ['*'],
                 'Access-Control-Allow-Credentials' => ['true'],

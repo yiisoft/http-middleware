@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Yiisoft\Http\Header;
+use Yiisoft\Http\Status;
 
 /**
  * Redirects insecure requests from HTTP to HTTPS and adds headers necessary to enhance the security policy.
@@ -61,8 +63,8 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
     {
         $url = (string) $request->getUri()->withScheme('https')->withPort($this->redirectOptions->port);
         return $this->responseFactory
-            ->createResponse(301) // 301 Moved Permanently
-            ->withHeader('Location', $url);
+            ->createResponse(Status::MOVED_PERMANENTLY)
+            ->withHeader(Header::LOCATION, $url);
     }
 
     private function addCsp(ResponseInterface $response): ResponseInterface
@@ -70,7 +72,7 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
         if ($this->cspHeader === null) {
             return $response;
         }
-        return $response->withHeader('Content-Security-Policy', $this->cspHeader);
+        return $response->withHeader(Header::CONTENT_SECURITY_POLICY, $this->cspHeader);
     }
 
     private function addHsts(ResponseInterface $response): ResponseInterface
@@ -79,7 +81,7 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
             return $response;
         }
         return $response->withHeader(
-            'Strict-Transport-Security',
+            Header::STRICT_TRANSPORT_SECURITY,
             $this->hstsHeader->getValue(),
         );
     }
