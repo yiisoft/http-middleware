@@ -2,7 +2,7 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- Enh #14: Replace hard-coded HTTP values with `yiisoft/http` constants (@rustamwin)
 
 ## 1.1.0 June 09, 2025
 
