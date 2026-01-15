@@ -35,8 +35,7 @@ final class ContentLengthMiddleware implements MiddlewareInterface
             205, // Reset Content
             304, // Not Modified
         ],
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

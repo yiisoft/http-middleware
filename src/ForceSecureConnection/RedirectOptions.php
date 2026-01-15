@@ -16,6 +16,5 @@ final class RedirectOptions
     public function __construct(
         public readonly bool $enabled = true,
         public readonly ?int $port = null,
-    ) {
-    }
+    ) {}
 }

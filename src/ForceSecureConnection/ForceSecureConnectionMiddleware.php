@@ -37,8 +37,7 @@ final class ForceSecureConnectionMiddleware implements MiddlewareInterface
         private readonly RedirectOptions $redirectOptions = new RedirectOptions(),
         private readonly ?string $cspHeader = self::DEFAULT_CSP_HEADER,
         private readonly ?HstsHeader $hstsHeader = new HstsHeader(),
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

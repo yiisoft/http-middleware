@@ -23,8 +23,7 @@ final class TagRequestMiddleware implements MiddlewareInterface
     public function __construct(
         private readonly string $attributeName = 'requestTag',
         private readonly TagProviderInterface $tagProvider = new TimeBasedTagProvider(),
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

@@ -28,7 +28,7 @@ final class RemoveBodyMiddlewareTest extends TestCase
         $requestHandler = new FakeRequestHandler(
             new Response(
                 statusCode: $statusCode,
-                body: (new StreamFactory())->createStream('test')
+                body: (new StreamFactory())->createStream('test'),
             ),
         );
         $middleware = new RemoveBodyMiddleware($streamFactory);
@@ -48,7 +48,7 @@ final class RemoveBodyMiddlewareTest extends TestCase
         $requestHandler = new FakeRequestHandler(
             new Response(
                 statusCode: $statusCode,
-                body: (new StreamFactory())->createStream('test')
+                body: (new StreamFactory())->createStream('test'),
             ),
         );
         $middleware = new RemoveBodyMiddleware($streamFactory, [100, 404]);
