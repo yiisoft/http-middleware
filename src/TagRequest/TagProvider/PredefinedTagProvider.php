@@ -43,6 +43,7 @@ final class PredefinedTagProvider implements TagProviderInterface
 
         return $tag;
     }
+
     /**
      * @psalm-param iterable<int, string> $iterable
      * @psalm-return Iterator<int, string>

@@ -16,8 +16,7 @@ final class ETagHeader
     public function __construct(
         private readonly ETag $eTag,
         private readonly ETagGeneratorInterface $generator,
-    ) {
-    }
+    ) {}
 
     /**
      * Returns the raw ETag value generated from the seed.

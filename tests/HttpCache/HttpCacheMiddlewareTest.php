@@ -68,7 +68,7 @@ final class HttpCacheMiddlewareTest extends TestCase
             new ResponseFactory(),
             eTagProvider: new PredefinedETagProvider([
                 new ETag('tag1'),
-            ])
+            ]),
         );
 
         $response = $middleware->process($request, $requestHandler);
@@ -111,7 +111,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         assertSame($request, $requestHandler->getLastRequest());
         assertSame(
             [
-                'Last-Modified' => ['Sun, 01 Oct 2023 12:00:15 GMT']
+                'Last-Modified' => ['Sun, 01 Oct 2023 12:00:15 GMT'],
             ],
             $response->getHeaders(),
         );
@@ -122,14 +122,14 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-None-Match' => ['"tag1"'],
-            ]
+            ],
         );
         $middleware = new HttpCacheMiddleware(
             new ResponseFactory(),
             eTagProvider: new PredefinedETagProvider([new ETag('test')]),
             eTagGenerator: new CallableETagGenerator(
                 static fn(string $seed) => $seed . '-value',
-            )
+            ),
         );
 
         $response = $middleware->process($request, new FakeRequestHandler());
@@ -152,14 +152,14 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-None-Match' => $ifNoneMatchValues,
-            ]
+            ],
         );
         $middleware = new HttpCacheMiddleware(
             new ResponseFactory(),
             eTagProvider: new PredefinedETagProvider([new ETag('tag1')]),
             eTagGenerator: new CallableETagGenerator(
                 static fn(string $seed) => $seed,
-            )
+            ),
         );
 
         $response = $middleware->process($request, new FakeRequestHandler());
@@ -178,7 +178,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-None-Match' => ['"tag1"'],
-            ]
+            ],
         );
         $middleware = new HttpCacheMiddleware(
             new ResponseFactory(),
@@ -196,14 +196,14 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-None-Match' => [''],
-            ]
+            ],
         );
         $middleware = new HttpCacheMiddleware(
             new ResponseFactory(),
             eTagProvider: new PredefinedETagProvider([new ETag('test')]),
             eTagGenerator: new CallableETagGenerator(
                 static fn(string $seed) => $seed . '-value',
-            )
+            ),
         );
 
         $response = $middleware->process($request, new FakeRequestHandler());
@@ -222,7 +222,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-Modified-Since' => 'Sat, 25 May 2024 10:00:00 GMT',
-            ]
+            ],
         );
         $date = new DateTimeImmutable('Sun, 26 May 2024 12:30:00 GMT');
         $middleware = new HttpCacheMiddleware(
@@ -248,7 +248,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-Modified-Since' => $ifModifiedSinceValue,
-            ]
+            ],
         );
         $date = new DateTimeImmutable('Fri, 24 May 2024 12:30:00 GMT');
         $middleware = new HttpCacheMiddleware(
@@ -272,7 +272,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-Modified-Since' => 'Sat, 25 May 2024 10:00:00 GMT',
-            ]
+            ],
         );
         $middleware = new HttpCacheMiddleware(
             new ResponseFactory(),
@@ -290,7 +290,7 @@ final class HttpCacheMiddlewareTest extends TestCase
         $request = new ServerRequest(
             headers: [
                 'If-Modified-Since' => 'XXX',
-            ]
+            ],
         );
         $date = new DateTimeImmutable('1970-01-01 00:00:00 UTC');
         $middleware = new HttpCacheMiddleware(

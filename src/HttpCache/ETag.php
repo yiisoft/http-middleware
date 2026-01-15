@@ -19,6 +19,5 @@ final class ETag
     public function __construct(
         public readonly string $seed,
         public readonly bool $weak = false,
-    ) {
-    }
+    ) {}
 }
