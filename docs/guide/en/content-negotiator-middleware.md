@@ -69,44 +69,13 @@ $middleware = new ContentNegotiatorMiddleware([
 ### Handling multiple accept values
 
 When a client sends multiple content types in the `Accept` header (e.g., `Accept: text/html, application/json;q=0.9`),
-the middleware sorts them by quality values and processes them in order of preference. Higher quality values are processed
-first.
+the middleware sorts them by quality values and processes them in order of preference. Higher quality values are
+processed first.
 
 ```php
-// Request with Accept: text/html, application/json;q=0.9
-// Will use HtmlFormatterMiddleware (text/html has default q=1.0, higher than json's q=0.9)
-
 // Request with Accept: application/json;q=0.5, application/xml;q=0.9
 // Will use XmlFormatterMiddleware (xml has higher quality value)
 
 // Request with Accept: application/json, application/xml
 // Will use JsonFormatterMiddleware (both have default q=1.0, first in Accept header wins)
-```
-
-### Content type with parameters
-
-The middleware uses substring matching, so it works with content types that have additional parameters:
-
-```php
-// Request with Accept: application/json;charset=UTF-8
-// Will match 'application/json' and use JsonResponseMiddleware
-```
-
-## Validation
-
-The middleware validates the constructor parameters and throws a `RuntimeException` if:
-
-- A content type key is not a string
-- A middleware value is not an instance of `MiddlewareInterface`
-
-```php
-// This will throw RuntimeException
-new ContentNegotiatorMiddleware([
-    123 => $middleware, // Invalid: key must be a string
-]);
-
-// This will also throw RuntimeException
-new ContentNegotiatorMiddleware([
-    'application/json' => 'invalid', // Invalid: value must be MiddlewareInterface
-]);
 ```
