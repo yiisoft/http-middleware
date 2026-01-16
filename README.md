@@ -20,6 +20,8 @@ HTTP features:
 
 - [`ContentLengthMiddleware`](docs/guide/en/content-length-middleware.md) — manages the `Content-Length` header in
   the response;
+- [`ContentNegotiatorMiddleware`](docs/guide/en/content-negotiator-middleware.md) — performs content negotiation by
+  delegating request handling to specific middlewares based on the `Accept` header;
 - [`CorsAllowAllMiddleware`](docs/guide/en/cors-allow-all-middleware.md) — adds
 [CORS](https://developer.mozilla.org/docs/Web/HTTP/Guides/CORS) headers allowing any request origins in later
   requests;

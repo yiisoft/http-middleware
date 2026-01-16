@@ -4,6 +4,7 @@ The package provides a collection of [PSR-15](https://www.php-fig.org/psr/psr-15
 HTTP features. All middleware implements independent functionality and doesn't interact with each other in any way.
 
 - [`ContentLengthMiddleware`](content-length-middleware.md)
+- [`ContentNegotiatorMiddleware`](content-negotiator-middleware.md)
 - [`CorsAllowAllMiddleware`](cors-allow-all-middleware.md)
 - [`ForceSecureConnectionMiddleware`](force-secure-connection-middleware.md)
 - [`HeadRequestMiddleware`](head-request-middleware.md)
