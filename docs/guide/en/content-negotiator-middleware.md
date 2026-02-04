@@ -26,7 +26,9 @@ $middleware = new ContentNegotiatorMiddleware([
 2. It iterates through the sorted accept types (highest quality first).
 3. For each accept type, it checks all configured middlewares to find a matching content type using substring matching.
 4. When it finds a match, it delegates the request to the corresponding middleware.
-5. If no match is found, the request is passed to the next handler in the pipeline without any special processing.
+5. If no match is found and a fallback middleware is configured, the request is delegated to the fallback middleware.
+6. If no match is found and no fallback middleware is configured, the request is passed to the next handler
+   in the pipeline without any special processing.
 
 ## Constructor parameters
 
@@ -43,20 +45,6 @@ Example:
 use Yiisoft\HttpMiddleware\ContentNegotiatorMiddleware;
 
 $middleware = new ContentNegotiatorMiddleware([
-    'application/json' => new JsonFormatterMiddleware(),
-    'application/xml' => new XmlFormatterMiddleware(),
-    'text/html' => new HtmlFormatterMiddleware(),
-]);
-```
-
-## Usage examples
-
-### Basic content negotiation
-
-```php
-use Yiisoft\HttpMiddleware\ContentNegotiatorMiddleware;
-
-$middleware = new ContentNegotiatorMiddleware([
     'application/json' => new JsonResponseMiddleware(),
     'application/xml' => new XmlResponseMiddleware(),
 ]);
@@ -66,13 +54,47 @@ $middleware = new ContentNegotiatorMiddleware([
 // Request with Accept: text/html -> passed to next handler (no match)
 ```
 
-### Handling multiple accept values
+### `$fallbackMiddleware` (optional)
+
+Type: `MiddlewareInterface|null`
+
+Default: `null`
+
+A middleware to use when no content type matches the client's `Accept` header. If `null`, the request is passed
+to the next handler in the pipeline.
+
+Example:
+
+```php
+use Yiisoft\HttpMiddleware\ContentNegotiatorMiddleware;
+
+$middleware = new ContentNegotiatorMiddleware(
+    middlewares: [
+        'application/json' => new JsonResponseMiddleware(),
+        'application/xml' => new XmlResponseMiddleware(),
+    ],
+    fallbackMiddleware: new HtmlResponseMiddleware(),
+);
+
+// Request with Accept: application/json -> JsonResponseMiddleware will be used
+// Request with Accept: text/html -> HtmlResponseMiddleware will be used (fallback)
+// Request with Accept: */* -> HtmlResponseMiddleware will be used (fallback)
+```
+
+## Handling multiple accept values
 
 When a client sends multiple content types in the `Accept` header (e.g., `Accept: text/html, application/json;q=0.9`),
 the middleware sorts them by quality values and processes them in order of preference. Higher quality values are
 processed first.
 
 ```php
+use Yiisoft\HttpMiddleware\ContentNegotiatorMiddleware;
+
+$middleware = new ContentNegotiatorMiddleware([
+    'application/json' => new JsonFormatterMiddleware(),
+    'application/xml' => new XmlFormatterMiddleware(),
+]);
+
 // Request with Accept: application/json;q=0.5, application/xml;q=0.9
 // Will use XmlFormatterMiddleware (xml has higher quality value)
 

@@ -24,20 +24,18 @@ use function str_contains;
 final class ContentNegotiatorMiddleware implements MiddlewareInterface
 {
     /**
-     * @psalm-var array<string, MiddlewareInterface>
-     */
-    private array $middlewares;
-
-    /**
      * @param array $middlewares The array key is the content type, and the value is an instance of
      * {@see MiddlewareInterface}.
+     * @param MiddlewareInterface|null $fallbackMiddleware The middleware to use when no content type matches.
+     * If `null`, the request is passed to the next handler.
      *
      * @psalm-param array<string, MiddlewareInterface> $middlewares
      */
-    public function __construct(array $middlewares)
-    {
-        $this->checkMiddlewares($middlewares);
-        $this->middlewares = $middlewares;
+    public function __construct(
+        private readonly array $middlewares,
+        private readonly ?MiddlewareInterface $fallbackMiddleware = null,
+    ) {
+        $this->checkMiddlewares($this->middlewares);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -52,6 +50,10 @@ final class ContentNegotiatorMiddleware implements MiddlewareInterface
                     return $middleware->process($request, $handler);
                 }
             }
+        }
+
+        if ($this->fallbackMiddleware !== null) {
+            return $this->fallbackMiddleware->process($request, $handler);
         }
 
         return $handler->handle($request);

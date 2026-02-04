@@ -49,6 +49,48 @@ final class ContentNegotiatorMiddlewareTest extends TestCase
         assertSame($expectedBody, (string) $response->getBody());
     }
 
+    public function testFallbackMiddlewareUsedWhenNoMatch(): void
+    {
+        $request = (new ServerRequestFactory())
+            ->createServerRequest('GET', '/')
+            ->withHeader('Accept', 'text/html');
+
+        $streamFactory = new StreamFactory();
+        $handler = new FakeRequestHandler(new Response(body: $streamFactory->createStream('base')));
+        $jsonMiddleware = new MiddlewareStub(new Response(body: $streamFactory->createStream('json')));
+        $fallbackMiddleware = new MiddlewareStub(new Response(body: $streamFactory->createStream('fallback')));
+
+        $middleware = new ContentNegotiatorMiddleware(
+            ['application/json' => $jsonMiddleware],
+            $fallbackMiddleware,
+        );
+
+        $response = $middleware->process($request, $handler);
+
+        assertSame('fallback', (string) $response->getBody());
+    }
+
+    public function testFallbackMiddlewareNotUsedWhenMatch(): void
+    {
+        $request = (new ServerRequestFactory())
+            ->createServerRequest('GET', '/')
+            ->withHeader('Accept', 'application/json');
+
+        $streamFactory = new StreamFactory();
+        $handler = new FakeRequestHandler(new Response(body: $streamFactory->createStream('base')));
+        $jsonMiddleware = new MiddlewareStub(new Response(body: $streamFactory->createStream('json')));
+        $fallbackMiddleware = new MiddlewareStub(new Response(body: $streamFactory->createStream('fallback')));
+
+        $middleware = new ContentNegotiatorMiddleware(
+            ['application/json' => $jsonMiddleware],
+            $fallbackMiddleware,
+        );
+
+        $response = $middleware->process($request, $handler);
+
+        assertSame('json', (string) $response->getBody());
+    }
+
     public function testInvalidContentTypeThrowsException(): void
     {
         $middleware = new MiddlewareStub();
