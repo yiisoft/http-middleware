@@ -26,8 +26,8 @@ $middleware = new ContentNegotiatorMiddleware([
 2. It iterates through the sorted accept types (highest quality first).
 3. For each accept type, it checks all configured middlewares to find a matching content type using substring matching.
 4. When it finds a match, it delegates the request to the corresponding middleware.
-5. If no match is found and a fallback middleware is configured, the request is delegated to the fallback middleware.
-6. If no match is found and no fallback middleware is configured, the request is passed to the next handler
+5. If no match is found and a fallback is configured (middleware or request handler), the request is delegated to it.
+6. If no match is found and no fallback is configured, the request is passed to the next handler
    in the pipeline without any special processing.
 
 ## Constructor parameters
@@ -54,14 +54,16 @@ $middleware = new ContentNegotiatorMiddleware([
 // Request with Accept: text/html -> passed to next handler (no match)
 ```
 
-### `$fallbackMiddleware` (optional)
+### `$fallback` (optional)
 
-Type: `MiddlewareInterface|null`
+Type: `MiddlewareInterface|RequestHandlerInterface|null`
 
 Default: `null`
 
-A middleware to use when no content type matches the client's `Accept` header. If `null`, the request is passed
-to the next handler in the pipeline.
+A middleware or request handler to use when no content type matches the client's `Accept` header.
+If it is a `MiddlewareInterface`, the request is passed through it together with the next handler in the pipeline.
+If it is a `RequestHandlerInterface`, the request is passed directly to it.
+If `null`, the request is passed to the next handler in the pipeline.
 
 Example:
 
@@ -73,7 +75,7 @@ $middleware = new ContentNegotiatorMiddleware(
         'application/json' => new JsonResponseMiddleware(),
         'application/xml' => new XmlResponseMiddleware(),
     ],
-    fallbackMiddleware: new HtmlResponseMiddleware(),
+    fallback: new HtmlResponseMiddleware(),
 );
 
 // Request with Accept: application/json -> JsonResponseMiddleware will be used

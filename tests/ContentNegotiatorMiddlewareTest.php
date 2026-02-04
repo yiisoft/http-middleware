@@ -91,6 +91,48 @@ final class ContentNegotiatorMiddlewareTest extends TestCase
         assertSame('json', (string) $response->getBody());
     }
 
+    public function testFallbackRequestHandlerUsedWhenNoMatch(): void
+    {
+        $request = (new ServerRequestFactory())
+            ->createServerRequest('GET', '/')
+            ->withHeader('Accept', 'text/html');
+
+        $streamFactory = new StreamFactory();
+        $handler = new FakeRequestHandler(new Response(body: $streamFactory->createStream('base')));
+        $jsonMiddleware = new MiddlewareStub(new Response(body: $streamFactory->createStream('json')));
+        $fallbackHandler = new FakeRequestHandler(new Response(body: $streamFactory->createStream('fallback')));
+
+        $middleware = new ContentNegotiatorMiddleware(
+            ['application/json' => $jsonMiddleware],
+            $fallbackHandler,
+        );
+
+        $response = $middleware->process($request, $handler);
+
+        assertSame('fallback', (string) $response->getBody());
+    }
+
+    public function testFallbackRequestHandlerNotUsedWhenMatch(): void
+    {
+        $request = (new ServerRequestFactory())
+            ->createServerRequest('GET', '/')
+            ->withHeader('Accept', 'application/json');
+
+        $streamFactory = new StreamFactory();
+        $handler = new FakeRequestHandler(new Response(body: $streamFactory->createStream('base')));
+        $jsonMiddleware = new MiddlewareStub(new Response(body: $streamFactory->createStream('json')));
+        $fallbackHandler = new FakeRequestHandler(new Response(body: $streamFactory->createStream('fallback')));
+
+        $middleware = new ContentNegotiatorMiddleware(
+            ['application/json' => $jsonMiddleware],
+            $fallbackHandler,
+        );
+
+        $response = $middleware->process($request, $handler);
+
+        assertSame('json', (string) $response->getBody());
+    }
+
     public function testInvalidContentTypeThrowsException(): void
     {
         $middleware = new MiddlewareStub();

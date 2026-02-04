@@ -26,14 +26,14 @@ final class ContentNegotiatorMiddleware implements MiddlewareInterface
     /**
      * @param array $middlewares The array key is the content type, and the value is an instance of
      * {@see MiddlewareInterface}.
-     * @param MiddlewareInterface|null $fallbackMiddleware The middleware to use when no content type matches.
-     * If `null`, the request is passed to the next handler.
+     * @param MiddlewareInterface|RequestHandlerInterface|null $fallback The middleware or request handler to use when
+     * no content type matches. If `null`, the request is passed to the next handler.
      *
      * @psalm-param array<string, MiddlewareInterface> $middlewares
      */
     public function __construct(
         private readonly array $middlewares,
-        private readonly ?MiddlewareInterface $fallbackMiddleware = null,
+        private readonly MiddlewareInterface|RequestHandlerInterface|null $fallback = null,
     ) {
         $this->checkMiddlewares($this->middlewares);
     }
@@ -52,11 +52,11 @@ final class ContentNegotiatorMiddleware implements MiddlewareInterface
             }
         }
 
-        if ($this->fallbackMiddleware !== null) {
-            return $this->fallbackMiddleware->process($request, $handler);
-        }
-
-        return $handler->handle($request);
+        return match (true) {
+            $this->fallback instanceof MiddlewareInterface => $this->fallback->process($request, $handler),
+            $this->fallback instanceof RequestHandlerInterface => $this->fallback->handle($request),
+            default => $handler->handle($request),
+        };
     }
 
     /**
