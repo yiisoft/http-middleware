@@ -2,7 +2,7 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- New #17: Add `RedirectMiddleware` (@vjik)
 
 ## 1.1.0 June 09, 2025
 
