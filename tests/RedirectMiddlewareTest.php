@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HttpSoft\Message\Response;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\ServerRequest;
 use PHPUnit\Framework\TestCase;
@@ -75,5 +76,61 @@ final class RedirectMiddlewareTest extends TestCase
 
         assertSame(307, $response->getStatusCode());
         assertSame('https://example.com', $response->getHeaderLine('Location'));
+    }
+
+    public function testConditionTrue(): void
+    {
+        $middleware = new RedirectMiddleware(
+            new ResponseFactory(),
+            'https://example.com',
+            301,
+            static fn() => true,
+        );
+        $requestHandler = new FakeRequestHandler();
+
+        $response = $middleware->process(new ServerRequest(), $requestHandler);
+
+        assertNull($requestHandler->getLastRequest());
+        assertSame(301, $response->getStatusCode());
+        assertSame('https://example.com', $response->getHeaderLine('Location'));
+    }
+
+    public function testConditionFalse(): void
+    {
+        $middleware = new RedirectMiddleware(
+            new ResponseFactory(),
+            'https://example.com',
+            301,
+            static fn() => false,
+        );
+
+        $handlerResponse = new Response();
+        $requestHandler = new FakeRequestHandler($handlerResponse);
+        $request = new ServerRequest();
+
+        $response = $middleware->process($request, $requestHandler);
+
+        assertSame($request, $requestHandler->getLastRequest());
+        assertSame($handlerResponse, $response);
+    }
+
+    public function testConditionReceivesRequest(): void
+    {
+        $receivedRequest = null;
+        $request = new ServerRequest();
+
+        $middleware = new RedirectMiddleware(
+            new ResponseFactory(),
+            'https://example.com',
+            301,
+            static function ($request) use (&$receivedRequest) {
+                $receivedRequest = $request;
+                return true;
+            },
+        );
+
+        $middleware->process($request, new FakeRequestHandler());
+
+        assertSame($request, $receivedRequest);
     }
 }
