@@ -1,6 +1,7 @@
 # `RedirectMiddleware`
 
-This middleware responds with a redirect to the specified URL. It doesn't pass the request to the next handler.
+This middleware responds with a redirect to the specified URL. You can provide an optional condition callable to control
+whether the redirect should be performed.
 
 ## General usage
 
