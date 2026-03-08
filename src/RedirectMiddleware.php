@@ -27,8 +27,9 @@ final class RedirectMiddleware implements MiddlewareInterface
      * @param ResponseFactoryInterface $responseFactory Factory to create a response.
      * @param string $url The URL to redirect to.
      * @param int $statusCode The HTTP status code for the redirect response.
-     * @param callable|null $condition Optional condition callable. If provided, the redirect is performed only when
-     * the callable returns `true`. The callable receives the server request. For example:
+     * @param callable|null $condition Optional condition callable with signature
+     * `callable(ServerRequestInterface): bool`. If provided, the redirect is performed only when
+     * the callable returns `true`. For example:
      * ```php
      * static fn(ServerRequestInterface $request): bool => $request->getMethod() === 'POST'
      * ```
@@ -47,9 +48,13 @@ final class RedirectMiddleware implements MiddlewareInterface
     /**
      * Creates a middleware with "301 Moved Permanently" status.
      *
+     * @param ResponseFactoryInterface $responseFactory Factory to create a response.
+     * @param string $url The URL to redirect to.
      * @param callable|null $condition Optional condition callable.
      *
      * @psalm-param ConditionCallable|null $condition
+     *
+     * @see __construct()
      */
     public static function permanent(
         ResponseFactoryInterface $responseFactory,
@@ -62,9 +67,13 @@ final class RedirectMiddleware implements MiddlewareInterface
     /**
      * Creates a middleware with "302 Found" status.
      *
+     * @param ResponseFactoryInterface $responseFactory Factory to create a response.
+     * @param string $url The URL to redirect to.
      * @param callable|null $condition Optional condition callable.
      *
      * @psalm-param ConditionCallable|null $condition
+     *
+     * @see __construct()
      */
     public static function found(
         ResponseFactoryInterface $responseFactory,
@@ -77,9 +86,13 @@ final class RedirectMiddleware implements MiddlewareInterface
     /**
      * Creates a middleware with "303 See Other" status.
      *
+     * @param ResponseFactoryInterface $responseFactory Factory to create a response.
+     * @param string $url The URL to redirect to.
      * @param callable|null $condition Optional condition callable.
      *
      * @psalm-param ConditionCallable|null $condition
+     *
+     * @see __construct()
      */
     public static function seeOther(
         ResponseFactoryInterface $responseFactory,
@@ -92,9 +105,13 @@ final class RedirectMiddleware implements MiddlewareInterface
     /**
      * Creates a middleware with "307 Temporary Redirect" status.
      *
+     * @param ResponseFactoryInterface $responseFactory Factory to create a response.
+     * @param string $url The URL to redirect to.
      * @param callable|null $condition Optional condition callable.
      *
      * @psalm-param ConditionCallable|null $condition
+     *
+     * @see __construct()
      */
     public static function temporary(
         ResponseFactoryInterface $responseFactory,
