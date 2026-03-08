@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Yiisoft\HttpMiddleware\Tests\RedirectMiddleware;
+
 use HttpSoft\Message\Response;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\ServerRequest;
