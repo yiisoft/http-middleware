@@ -3,6 +3,8 @@
 This middleware responds with a redirect to the specified URL. You can provide an optional condition callable to control
 whether the redirect should be performed.
 
+> Read more about [redirecting](https://yiisoft.github.io/docs/guide/runtime/response.html#redirecting) in the Yii guide.
+
 ## General usage
 
 ```php
@@ -117,3 +119,4 @@ The callable receives the `ServerRequestInterface` and must return a boolean:
 - `false`, the request is passed to the next handler.
 
 When `null`, the redirect is always performed.
+
