@@ -3,6 +3,7 @@
 ## 1.1.1 under development
 
 - New #17: Add `RedirectMiddleware` (@vjik)
+- Chg #19: Change PHP constraint in `composer.json` to `8.1 - 8.5` (@vjik)
 
 ## 1.1.0 June 09, 2025
 
