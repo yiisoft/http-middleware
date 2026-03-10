@@ -1,5 +1,9 @@
 # Yii HTTP Middleware Change Log
 
+## 1.2.1 under development
+
+- no changes in this release.
+
 ## 1.2.0 March 10, 2026
 
 - New #17: Add `RedirectMiddleware` (@vjik)
