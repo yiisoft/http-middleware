@@ -18,8 +18,7 @@ final class HstsHeader
     public function __construct(
         public readonly int $maxAge = self::DEFAULT_MAX_AGE,
         public readonly bool $subdomains = false,
-    ) {
-    }
+    ) {}
 
     public function getValue(): string
     {

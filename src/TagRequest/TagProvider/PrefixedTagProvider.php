@@ -16,8 +16,7 @@ final class PrefixedTagProvider implements TagProviderInterface
     public function __construct(
         private readonly string $prefix,
         private readonly TagProviderInterface $decorated,
-    ) {
-    }
+    ) {}
 
     public function get(): string
     {

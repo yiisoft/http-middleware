@@ -7,9 +7,7 @@ namespace Yiisoft\HttpMiddleware\Tests\HttpCache;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\HttpMiddleware\HttpCache\ETag;
 use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\CallableETagGenerator;
-
 use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\ETagGeneratorInterface;
-
 use Yiisoft\HttpMiddleware\HttpCache\ETagHeader;
 
 use function PHPUnit\Framework\assertSame;

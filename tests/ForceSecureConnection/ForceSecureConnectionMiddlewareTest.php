@@ -35,7 +35,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
                 'Location' => ['https://example.com/blog'],
                 'Strict-Transport-Security' => ['max-age=31536000'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -53,7 +53,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
                 'Content-Security-Policy' => ['upgrade-insecure-requests; default-src https:'],
                 'Strict-Transport-Security' => ['max-age=31536000'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -74,7 +74,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
                 'Content-Security-Policy' => ['upgrade-insecure-requests; default-src https:'],
                 'Strict-Transport-Security' => ['max-age=31536000'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -95,7 +95,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
                 'Location' => ['https://example.com:8443/blog'],
                 'Strict-Transport-Security' => ['max-age=31536000'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -104,7 +104,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
         $request = new ServerRequest(uri: "https://example.com");
         $middleware = new ForceSecureConnectionMiddleware(
             new ResponseFactory(),
-            cspHeader: "default-src 'self'; script-src 'self' https://cdn.example.com"
+            cspHeader: "default-src 'self'; script-src 'self' https://cdn.example.com",
         );
 
         $response = $middleware->process($request, new FakeRequestHandler());
@@ -114,7 +114,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
                 'Content-Security-Policy' => ["default-src 'self'; script-src 'self' https://cdn.example.com"],
                 'Strict-Transport-Security' => ['max-age=31536000'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -132,7 +132,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
             [
                 'Strict-Transport-Security' => ['max-age=31536000'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -153,7 +153,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
                 'Location' => ['https://example.com/blog'],
                 'Strict-Transport-Security' => ['max-age=500; includeSubDomains'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 
@@ -173,7 +173,7 @@ final class ForceSecureConnectionMiddlewareTest extends TestCase
             [
                 'Location' => ['https://example.com/blog'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 }

@@ -20,8 +20,7 @@ final class HeadRequestMiddleware implements MiddlewareInterface
      */
     public function __construct(
         private readonly StreamFactoryInterface $streamFactory,
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

@@ -40,8 +40,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         private readonly LastModifiedProviderInterface $lastModifiedProvider = new NullLastModifiedProvider(),
         private readonly ETagProviderInterface $eTagProvider = new NullETagProvider(),
         private readonly ETagGeneratorInterface $eTagGenerator = new DefaultETagGenerator(),
-    ) {
-    }
+    ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -76,8 +75,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         ServerRequestInterface $request,
         ?DateTimeImmutable $lastModified,
         ?ETagHeader $eTagHeader,
-    ): bool
-    {
+    ): bool {
         if ($request->hasHeader('If-None-Match')) {
             if ($eTagHeader === null) {
                 return false;

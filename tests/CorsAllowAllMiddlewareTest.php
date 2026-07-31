@@ -34,7 +34,7 @@ final class CorsAllowAllMiddlewareTest extends TestCase
                 'Access-Control-Allow-Credentials' => ['true'],
                 'Access-Control-Max-Age' => ['86400'],
             ],
-            $response->getHeaders()
+            $response->getHeaders(),
         );
     }
 }

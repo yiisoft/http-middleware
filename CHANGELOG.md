@@ -1,8 +1,13 @@
 # Yii HTTP Middleware Change Log
 
-## 1.1.1 under development
+## 1.2.1 under development
 
 - no changes in this release.
+
+## 1.2.0 March 10, 2026
+
+- New #17: Add `RedirectMiddleware` (@vjik)
+- Chg #19: Change PHP constraint in `composer.json` to `8.1 - 8.5` (@vjik)
 
 ## 1.1.0 June 09, 2025
 

@@ -15,8 +15,7 @@ final class FakeRequestHandler implements RequestHandlerInterface
 
     public function __construct(
         public readonly ResponseInterface $response = new Response(),
-    ) {
-    }
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

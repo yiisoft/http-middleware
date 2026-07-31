@@ -18,8 +18,7 @@ final class ConstantCacheControlProvider implements CacheControlProviderInterfac
      */
     public function __construct(
         private readonly string $value = self::DEFAULT_VALUE,
-    ) {
-    }
+    ) {}
 
     public function get(ServerRequestInterface $request): ?string
     {

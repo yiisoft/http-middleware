@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\HttpMiddleware\ContentLengthMiddleware;
 use Yiisoft\HttpMiddleware\Tests\Support\FakeRequestHandler;
-
 use Yiisoft\HttpMiddleware\Tests\Support\StreamStub;
 use Yiisoft\HttpMiddleware\Tests\Support\StrictResponse;
 

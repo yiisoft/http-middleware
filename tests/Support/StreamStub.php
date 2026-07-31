@@ -8,12 +8,13 @@ use LogicException;
 use Psr\Http\Message\StreamInterface;
 use Stringable;
 
+use const SEEK_SET;
+
 final class StreamStub implements StreamInterface, Stringable
 {
     public function __construct(
         private readonly bool $readable = true,
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

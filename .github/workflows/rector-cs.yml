@@ -8,6 +8,7 @@ on:
       - 'rector.php'
       - 'composer.json'
       - '.github/workflows/rector-cs.yml'
+      - '.php-cs-fixer.dist.php'
 
 permissions:
   contents: read
