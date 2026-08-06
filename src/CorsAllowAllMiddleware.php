@@ -10,6 +10,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function count;
+use function in_array;
+
 /**
  * Adds Cross-Origin Resource Sharing (CORS) headers allowing everything to the response.
  *
@@ -30,9 +33,10 @@ final class CorsAllowAllMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $origin = $request->getHeaderLine('Origin');
+        $origins = $request->getHeader('Origin');
+        $origin = count($origins) === 1 ? $origins[0] : '';
         $isPreflight = $request->getMethod() === 'OPTIONS'
-            && $request->hasHeader('Access-Control-Request-Method');
+            && $request->getHeaderLine('Access-Control-Request-Method') !== '';
 
         $response = $isPreflight && $this->responseFactory !== null
             ? $this->responseFactory->createResponse(204)
@@ -47,8 +51,12 @@ final class CorsAllowAllMiddleware implements MiddlewareInterface
             }
         }
 
+        $vary = array_map(trim(...), explode(',', strtolower($response->getHeaderLine('Vary'))));
+        if (!in_array('origin', $vary, true)) {
+            $response = $response->withAddedHeader('Vary', 'Origin');
+        }
+
         $response = $response
-            ->withHeader('Vary', 'Origin')
             ->withHeader('Access-Control-Allow-Origin', $origin === '' ? '*' : $origin)
             ->withHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,HEAD,POST,PUT,PATCH,DELETE')
             ->withHeader('Access-Control-Max-Age', '86400');
