@@ -2,7 +2,7 @@
 
 ## 1.2.1 under development
 
-- no changes in this release.
+- Bug #24: Fix invalid CORS headers and add optional preflight request handling to `CorsAllowAllMiddleware` (@samdark)
 
 ## 1.2.0 March 10, 2026
 
