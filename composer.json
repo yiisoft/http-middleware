@@ -41,6 +41,7 @@
         "phpunit/phpunit": "^10.5.46",
         "rector/rector": "^2.0.16",
         "roave/infection-static-analysis-plugin": "^1.35",
+        "shipmonk/composer-dependency-analyser": "^1.8",
         "vimeo/psalm": "^5.26.1 || ^6.11.0"
     },
     "autoload": {
@@ -69,6 +70,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit --testdox --no-interaction"
+        "test": "phpunit --testdox --no-interaction",
+        "dependency-analyser": "composer-dependency-analyser"
     }
 }
