@@ -25,4 +25,15 @@ use Yiisoft\HttpMiddleware\CorsAllowAllMiddleware;
 $middleware = new CorsAllowAllMiddleware();
 ```
 
-There are no constructor arguments, the middleware is ready to use out of the box.
+To handle CORS preflight requests without passing them to the request handler, provide a PSR-17 response factory:
+
+```php
+use Psr\Http\Message\ResponseFactoryInterface;
+use Yiisoft\HttpMiddleware\CorsAllowAllMiddleware;
+
+/** @var ResponseFactoryInterface $responseFactory */
+$middleware = new CorsAllowAllMiddleware($responseFactory);
+```
+
+The constructor argument is optional for backward compatibility. Without a response factory, preflight requests are
+passed to the next request handler and CORS headers are added to its response.
