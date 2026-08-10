@@ -1,6 +1,6 @@
 # Yii HTTP Middleware Change Log
 
-## 1.2.1 under development
+## 1.2.1 August 10, 2026
 
 - Bug #24: Fix invalid CORS headers and add optional preflight request handling to `CorsAllowAllMiddleware` (@samdark)
 
