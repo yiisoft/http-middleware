@@ -3,8 +3,11 @@
 ## 1.2.2 under development
 
 - New #29: Add `$keepHeadersOnStatusCode` and `$removedHeaders` constructor parameters to `RemoveBodyMiddleware` (@vjik)
+- New #29: Add `$removeOnStatusCode` constructor parameter to `ContentLengthMiddleware` (@vjik)
 - Bug #29: Remove `Content-Length` and `Transfer-Encoding` headers in `RemoveBodyMiddleware` when the body is
   removed (@vjik)
+- Bug #29: Remove already present `Content-Length` header in `ContentLengthMiddleware` for status codes that must
+  not carry one (@vjik)
 
 ## 1.2.1 August 10, 2026
 

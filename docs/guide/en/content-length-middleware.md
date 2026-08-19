@@ -6,6 +6,8 @@ A configurable middleware that manages the `Content-Length` HTTP response header
 This middleware is used to:
 
 - remove the `Content-Length` header if the `Transfer-Encoding` header is present (typically for chunked responses);
+- remove an already present `Content-Length` header for status codes that must not carry one, such as
+  `204 No Content` (see [RFC 9110, §8.6](https://datatracker.ietf.org/doc/html/rfc9110#section-8.6));
 - add the `Content-Length` header if it's missing and the response body allows it.
 
 Default usage:
@@ -51,3 +53,23 @@ Default:
 ```
 
 An array of HTTP status codes for which the `Content-Length` header should not be added.
+
+### `$removeOnStatusCode`
+
+Type: `list<int>`
+
+Default:
+```php
+[
+    100, // Continue
+    101, // Switching Protocols
+    102, // Processing
+    204, // No Content
+    205, // Reset Content
+]
+```
+
+An array of HTTP status codes for which an already present `Content-Length` header should be removed. `304`
+is not included by default, since per [RFC 9110, §8.6](https://datatracker.ietf.org/doc/html/rfc9110#section-8.6)
+a `304 Not Modified` response may still carry `Content-Length` describing the representation that would have
+been sent in a `200 OK` response to the same request.
