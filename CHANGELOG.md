@@ -8,6 +8,8 @@
   removed (@vjik)
 - Bug #29: Remove already present `Content-Length` header in `ContentLengthMiddleware` for status codes that must
   not carry one (@vjik)
+- Bug #29: Add missing `103 Early Hints` status code to default status code lists in `RemoveBodyMiddleware` and
+  `ContentLengthMiddleware` (@vjik)
 
 ## 1.2.1 August 10, 2026
 
