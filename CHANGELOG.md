@@ -2,7 +2,9 @@
 
 ## 1.2.2 under development
 
-- no changes in this release.
+- New #29: Add `$keepHeadersOnStatusCode` and `$removedHeaders` constructor parameters to `RemoveBodyMiddleware` (@vjik)
+- Bug #29: Remove `Content-Length` and `Transfer-Encoding` headers in `RemoveBodyMiddleware` when the body is
+  removed (@vjik)
 
 ## 1.2.1 August 10, 2026
 
