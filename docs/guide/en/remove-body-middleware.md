@@ -6,7 +6,8 @@ no body content is sent for certain HTTP responses, such as `204 No Content` or 
 When the body is removed, headers describing it — `Content-Length` and `Transfer-Encoding` by default — are removed
 as well, so the response does not advertise content that is no longer there. The exception is `304 Not Modified`:
 per [RFC 9110, §8.6](https://datatracker.ietf.org/doc/html/rfc9110#section-8.6) and
-[RFC 9112, §6.1](https://datatracker.ietf.org/doc/html/rfc9112#section-6.1), a `304` response may still carry these
+[RFC 9112, §6.1](https://datatracker.ietf.org/doc/html/rfc9112#section-6.1) /
+[§6.3](https://datatracker.ietf.org/doc/html/rfc9112#section-6.3), a `304` response may still carry these
 headers to describe the representation that would have been sent in a `200 OK` response to the same request, so
 they are kept by default.
 
@@ -41,6 +42,7 @@ Default:
     100, // Continue
     101, // Switching Protocols
     102, // Processing
+    103, // Early Hints
     204, // No Content
     205, // Reset Content
     304, // Not Modified
@@ -63,7 +65,8 @@ Default:
 An array of HTTP status codes for which headers listed in `$removedHeaders` are kept even though the body is
 removed. By default, this only applies to `304 Not Modified`, since per
 [RFC 9110, §8.6](https://datatracker.ietf.org/doc/html/rfc9110#section-8.6)
-and [RFC 9112, §6.1](https://datatracker.ietf.org/doc/html/rfc9112#section-6.1) a `304` response may still carry
+and [RFC 9112, §6.1](https://datatracker.ietf.org/doc/html/rfc9112#section-6.1) /
+[§6.3](https://datatracker.ietf.org/doc/html/rfc9112#section-6.3) a `304` response may still carry
 `Content-Length` and `Transfer-Encoding` describing the representation that would have been sent in a `200 OK`
 response to the same request.
 

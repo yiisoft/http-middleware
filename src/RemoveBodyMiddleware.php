@@ -21,6 +21,7 @@ use function in_array;
  * to the same request, even though no body is actually sent.
  *
  * @see https://datatracker.ietf.org/doc/html/rfc9110#section-8.6
+ * @see https://datatracker.ietf.org/doc/html/rfc9112#section-6.1
  * @see https://datatracker.ietf.org/doc/html/rfc9112#section-6.3
  */
 final class RemoveBodyMiddleware implements MiddlewareInterface
@@ -43,6 +44,7 @@ final class RemoveBodyMiddleware implements MiddlewareInterface
             100, // Continue
             101, // Switching Protocols
             102, // Processing
+            103, // Early Hints
             204, // No Content
             205, // Reset Content
             304, // Not Modified

@@ -36,6 +36,7 @@ final class ContentLengthMiddleware implements MiddlewareInterface
             100, // Continue
             101, // Switching Protocols
             102, // Processing
+            103, // Early Hints
             204, // No Content
             205, // Reset Content
             304, // Not Modified
@@ -44,6 +45,7 @@ final class ContentLengthMiddleware implements MiddlewareInterface
             100, // Continue
             101, // Switching Protocols
             102, // Processing
+            103, // Early Hints
             204, // No Content
             205, // Reset Content
         ],
