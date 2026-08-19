@@ -1,0 +1,7 @@
+<roave-bc-check xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/roave/backward-compatibility-check/Resources/schema.xsd">
+    <baseline>
+        <ignored-regex>#Default parameter value for parameter \$doNotAddOnStatusCode of Yiisoft\\HttpMiddleware\\ContentLengthMiddleware#</ignored-regex>
+        <ignored-regex>#Default parameter value for parameter \$statusCodes of Yiisoft\\HttpMiddleware\\RemoveBodyMiddleware#</ignored-regex>
+    </baseline>
+</roave-bc-check>
