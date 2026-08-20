@@ -16,6 +16,8 @@ use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\DefaultETagGenerator;
 use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\ETagGeneratorInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\ETagProviderInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\NullETagProvider;
+use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\ETagValueNormalizerInterface;
+use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\NullETagValueNormalizer;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\LastModifiedProviderInterface;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\NullLastModifiedProvider;
 
@@ -33,6 +35,8 @@ final class HttpCacheMiddleware implements MiddlewareInterface
      * @param LastModifiedProviderInterface $lastModifiedProvider The last modified dates provider.
      * @param ETagProviderInterface $eTagProvider The provider for {@see ETag}.
      * @param ETagGeneratorInterface $eTagGenerator The {@see ETag} string values generator.
+     * @param ETagValueNormalizerInterface $eTagValueNormalizer The normalizer for raw ETag values obtained from
+     * the `If-None-Match` request header.
      */
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
@@ -40,6 +44,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         private readonly LastModifiedProviderInterface $lastModifiedProvider = new NullLastModifiedProvider(),
         private readonly ETagProviderInterface $eTagProvider = new NullETagProvider(),
         private readonly ETagGeneratorInterface $eTagGenerator = new DefaultETagGenerator(),
+        private readonly ETagValueNormalizerInterface $eTagValueNormalizer = new NullETagValueNormalizer(),
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -145,11 +150,12 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         }
 
         return array_map(
-            static function (string $value): string {
+            function (string $value): string {
                 /**
                  * @var string We use a correct pattern, so `preg_replace` always returns a string.
                  */
-                return preg_replace('~^\s*(?:W/)?"([^"]+)"\s*$~', '$1', $value);
+                $rawETag = preg_replace('~^\s*(?:W/)?"([^"]+)"\s*$~', '$1', $value);
+                return $this->eTagValueNormalizer->normalize($rawETag);
             },
             explode(',', $rawValue),
         );

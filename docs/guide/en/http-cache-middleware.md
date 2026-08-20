@@ -90,6 +90,32 @@ Default: `new DefaultETagGenerator()`
 
 An instance of `ETagGeneratorInterface` that generates a string `ETag` value based on the provided seed.
 
+### `$eTagValueNormalizer`
+
+Type: `Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\ETagValueNormalizerInterface`
+
+Default: `new NullETagValueNormalizer()`
+
+An instance of `ETagValueNormalizerInterface` that normalizes raw ETag values obtained from the `If-None-Match`
+request header before comparing them with the application generated ETag value.
+
+Normalization is needed when an intermediary, such as a web server compression module, modifies the ETag header value.
+For example, Apache `mod_deflate` and `mod_brotli` append `-gzip` and `-br` suffixes to the ETag value
+(see [mod_deflate documentation](https://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflatealteretag)).
+
+Implementations out of the box:
+
+- `NullETagValueNormalizer` — returns ETag values unmodified.
+- `SuffixETagValueNormalizer` — removes the first matching suffix from a given list of suffixes.
+
+Example usage for a server that appends compression suffixes:
+
+```php
+use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\SuffixETagValueNormalizer;
+
+$eTagValueNormalizer = new SuffixETagValueNormalizer(['-gzip', '-br']);
+```
+
 ## `Cache-Control` header value providers
 
 A provider should implement the `CacheControlProviderInterface` interface to supply the value of the `Cache-Control` 

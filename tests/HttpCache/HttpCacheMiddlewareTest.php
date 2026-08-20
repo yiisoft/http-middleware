@@ -16,6 +16,7 @@ use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\CallableETagGenerator;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\NullETagProvider;
 use Yiisoft\HttpMiddleware\HttpCache\HttpCacheMiddleware;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\PredefinedETagProvider;
+use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\SuffixETagValueNormalizer;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\NullLastModifiedProvider;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\PredefinedLastModifiedProvider;
 use Yiisoft\HttpMiddleware\Tests\Support\FakeRequestHandler;
@@ -160,6 +161,35 @@ final class HttpCacheMiddlewareTest extends TestCase
             eTagGenerator: new CallableETagGenerator(
                 static fn(string $seed) => $seed,
             ),
+        );
+
+        $response = $middleware->process($request, new FakeRequestHandler());
+
+        assertSame(304, $response->getStatusCode());
+        assertSame(
+            [
+                'ETag' => ['"tag1"'],
+            ],
+            $response->getHeaders(),
+        );
+    }
+
+    #[TestWith([['"tag1-gzip"']])]
+    #[TestWith([['W/"tag1-gzip"']])]
+    public function testIfNoneMatchEqualsWithSuffixNormalizer(array $ifNoneMatchValues): void
+    {
+        $request = new ServerRequest(
+            headers: [
+                'If-None-Match' => $ifNoneMatchValues,
+            ],
+        );
+        $middleware = new HttpCacheMiddleware(
+            new ResponseFactory(),
+            eTagProvider: new PredefinedETagProvider([new ETag('tag1')]),
+            eTagGenerator: new CallableETagGenerator(
+                static fn(string $seed) => $seed,
+            ),
+            eTagValueNormalizer: new SuffixETagValueNormalizer(['-gzip', '-br']),
         );
 
         $response = $middleware->process($request, new FakeRequestHandler());

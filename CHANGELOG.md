@@ -2,7 +2,8 @@
 
 ## 1.2.2 under development
 
-- no changes in this release.
+- New #11: Add ETag value normalization in `HttpCacheMiddleware` via `ETagValueNormalizerInterface` with
+  `NullETagValueNormalizer` and `SuffixETagValueNormalizer` implementations (@KalimeroMK)
 
 ## 1.2.1 August 10, 2026
 
