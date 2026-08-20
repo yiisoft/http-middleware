@@ -87,9 +87,6 @@ final class HttpCacheMiddleware implements MiddlewareInterface
             }
 
             $headerETags = $this->extractRawETagValues($request);
-            if ($headerETags === []) {
-                return false;
-            }
             return in_array($eTagHeader->rawValue(), $headerETags, true);
         }
 

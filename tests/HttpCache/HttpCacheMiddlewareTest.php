@@ -16,11 +16,13 @@ use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\CallableETagGenerator;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\NullETagProvider;
 use Yiisoft\HttpMiddleware\HttpCache\HttpCacheMiddleware;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\PredefinedETagProvider;
+use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\ETagValueNormalizerInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\SuffixETagValueNormalizer;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\NullLastModifiedProvider;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\PredefinedLastModifiedProvider;
 use Yiisoft\HttpMiddleware\Tests\Support\FakeRequestHandler;
 
+use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertSame;
 
 final class HttpCacheMiddlewareTest extends TestCase
@@ -245,6 +247,37 @@ final class HttpCacheMiddlewareTest extends TestCase
             ],
             $response->getHeaders(),
         );
+    }
+
+    public function testEmptyIfNoneMatchDoesNotCallETagValueNormalizer(): void
+    {
+        $request = new ServerRequest(
+            headers: [
+                'If-None-Match' => [''],
+            ],
+        );
+        $normalizer = new class implements ETagValueNormalizerInterface {
+            public bool $called = false;
+
+            public function normalize(string $value): string
+            {
+                $this->called = true;
+                return $value;
+            }
+        };
+        $middleware = new HttpCacheMiddleware(
+            new ResponseFactory(),
+            eTagProvider: new PredefinedETagProvider([new ETag('test')]),
+            eTagGenerator: new CallableETagGenerator(
+                static fn(string $seed) => $seed,
+            ),
+            eTagValueNormalizer: $normalizer,
+        );
+
+        $response = $middleware->process($request, new FakeRequestHandler());
+
+        assertSame(200, $response->getStatusCode());
+        assertFalse($normalizer->called);
     }
 
     public function testIfModifiedSinceTrue(): void
