@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer;
 
-use function is_string;
 use function str_ends_with;
 use function strlen;
 use function substr;
@@ -33,7 +32,7 @@ final class SuffixETagValueNormalizer implements ETagValueNormalizerInterface
      */
     public function __construct(string|array $suffix)
     {
-        $this->suffixes = is_string($suffix) ? [$suffix] : $suffix;
+        $this->suffixes = (array) $suffix;
     }
 
     public function normalize(string $value): string

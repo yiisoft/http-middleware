@@ -94,7 +94,7 @@ An instance of `ETagGeneratorInterface` that generates a string `ETag` value bas
 
 Type: `Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\ETagValueNormalizerInterface`
 
-Default: `new NullETagValueNormalizer()`
+Default: `new NoopETagValueNormalizer()`
 
 An instance of `ETagValueNormalizerInterface` that normalizes raw ETag values obtained from the `If-None-Match`
 request header before comparing them with the application generated ETag value.
@@ -105,7 +105,7 @@ For example, Apache `mod_deflate` and `mod_brotli` append `-gzip` and `-br` suff
 
 Implementations out of the box:
 
-- `NullETagValueNormalizer` — returns ETag values unmodified.
+- `NoopETagValueNormalizer` — returns ETag values unmodified.
 - `SuffixETagValueNormalizer` — removes the first matching suffix from a given list of suffixes.
 
 Example usage for a server that appends compression suffixes:

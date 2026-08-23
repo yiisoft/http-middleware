@@ -17,7 +17,7 @@ use Yiisoft\HttpMiddleware\HttpCache\ETagGenerator\ETagGeneratorInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\ETagProviderInterface;
 use Yiisoft\HttpMiddleware\HttpCache\ETagProvider\NullETagProvider;
 use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\ETagValueNormalizerInterface;
-use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\NullETagValueNormalizer;
+use Yiisoft\HttpMiddleware\HttpCache\ETagValueNormalizer\NoopETagValueNormalizer;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\LastModifiedProviderInterface;
 use Yiisoft\HttpMiddleware\HttpCache\LastModifiedProvider\NullLastModifiedProvider;
 
@@ -44,7 +44,7 @@ final class HttpCacheMiddleware implements MiddlewareInterface
         private readonly LastModifiedProviderInterface $lastModifiedProvider = new NullLastModifiedProvider(),
         private readonly ETagProviderInterface $eTagProvider = new NullETagProvider(),
         private readonly ETagGeneratorInterface $eTagGenerator = new DefaultETagGenerator(),
-        private readonly ETagValueNormalizerInterface $eTagValueNormalizer = new NullETagValueNormalizer(),
+        private readonly ETagValueNormalizerInterface $eTagValueNormalizer = new NoopETagValueNormalizer(),
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
