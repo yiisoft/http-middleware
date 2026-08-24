@@ -13,6 +13,8 @@ use function in_array;
 
 /**
  * Configurable middleware that adds or removes the `Content-Length` header from the response.
+ *
+ * @see https://datatracker.ietf.org/doc/html/rfc9110#section-8.6
  */
 final class ContentLengthMiddleware implements MiddlewareInterface
 {
@@ -21,8 +23,11 @@ final class ContentLengthMiddleware implements MiddlewareInterface
      * is present.
      * @param bool $add Whether to add the `Content-Length` header if not present.
      * @param array $doNotAddOnStatusCode List of HTTP status codes where `Content-Length` header should not be added.
+     * @param array $removeOnStatusCode List of HTTP status codes for which an already present `Content-Length`
+     * header should be removed.
      *
      * @psalm-param list<int> $doNotAddOnStatusCode
+     * @psalm-param list<int> $removeOnStatusCode
      */
     public function __construct(
         private readonly bool $removeOnTransferEncoding = true,
@@ -31,9 +36,18 @@ final class ContentLengthMiddleware implements MiddlewareInterface
             100, // Continue
             101, // Switching Protocols
             102, // Processing
+            103, // Early Hints
             204, // No Content
             205, // Reset Content
             304, // Not Modified
+        ],
+        private readonly array $removeOnStatusCode = [
+            100, // Continue
+            101, // Switching Protocols
+            102, // Processing
+            103, // Early Hints
+            204, // No Content
+            205, // Reset Content
         ],
     ) {}
 
@@ -54,7 +68,12 @@ final class ContentLengthMiddleware implements MiddlewareInterface
 
     private function shouldRemoveContentLength(ResponseInterface $response): bool
     {
-        return $this->removeOnTransferEncoding && $response->hasHeader('Transfer-Encoding');
+        if ($this->removeOnTransferEncoding && $response->hasHeader('Transfer-Encoding')) {
+            return true;
+        }
+
+        return $response->hasHeader('Content-Length')
+            && in_array($response->getStatusCode(), $this->removeOnStatusCode, true);
     }
 
     private function shouldSkipContentLength(ResponseInterface $response): bool

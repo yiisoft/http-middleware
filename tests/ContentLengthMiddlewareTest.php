@@ -94,6 +94,7 @@ final class ContentLengthMiddlewareTest extends TestCase
     #[TestWith([100])]
     #[TestWith([101])]
     #[TestWith([102])]
+    #[TestWith([103])]
     #[TestWith([204])]
     #[TestWith([205])]
     #[TestWith([304])]
@@ -111,6 +112,45 @@ final class ContentLengthMiddlewareTest extends TestCase
         $response = $middleware->process($request, $handler);
 
         assertSame([], $response->getHeaders());
+    }
+
+    #[TestWith([true, 100])]
+    #[TestWith([true, 101])]
+    #[TestWith([true, 102])]
+    #[TestWith([true, 103])]
+    #[TestWith([true, 204])]
+    #[TestWith([true, 205])]
+    #[TestWith([false, 304])]
+    public function testRemoveOnStatusCodeDefaults(bool $expectRemoved, int $statusCode): void
+    {
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+        $handler = new FakeRequestHandler(
+            new Response(
+                $statusCode,
+                headers: ['Content-Length' => '500'],
+            ),
+        );
+        $middleware = new ContentLengthMiddleware();
+
+        $response = $middleware->process($request, $handler);
+
+        assertSame(!$expectRemoved, $response->hasHeader('Content-Length'));
+    }
+
+    public function testCustomRemoveOnStatusCode(): void
+    {
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+        $handler = new FakeRequestHandler(
+            new Response(
+                304,
+                headers: ['Content-Length' => '500'],
+            ),
+        );
+        $middleware = new ContentLengthMiddleware(removeOnStatusCode: [304]);
+
+        $response = $middleware->process($request, $handler);
+
+        assertSame(false, $response->hasHeader('Content-Length'));
     }
 
     public function testDoNotAddOnZeroLength(): void
