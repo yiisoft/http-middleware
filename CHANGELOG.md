@@ -1,5 +1,9 @@
 # Yii HTTP Middleware Change Log
 
+## 1.3.1 under development
+
+- no changes in this release.
+
 ## 1.3.0 August 24, 2026
 
 - New #11: Add ETag value normalization in `HttpCacheMiddleware` via `ETagValueNormalizerInterface` with
